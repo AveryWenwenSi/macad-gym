@@ -30,8 +30,8 @@ change that at https://github.com/praveen-palanisamy/macad-gym/blob/38884ac4bc7f
 with
 
 ```python
-            "x_res": 168,
-            "y_res": 168,
+            "x_res": 84,
+            "y_res": 84,
 
 ```
 you should chage both the env and the 3 actors resolution! 
