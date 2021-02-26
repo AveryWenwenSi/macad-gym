@@ -7,7 +7,7 @@ python basic_agent.py
 ```
 
 Ray Result at ~/ray_results
-open website at localhost:8265 to see ray dashboard
+open website at http://localhost:8265 to see ray dashboard
 
 no additional requirements
 (maybe ray==0.6.2)
