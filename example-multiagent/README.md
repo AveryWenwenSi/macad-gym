@@ -1,4 +1,3 @@
-[![Demo Multi-agent using ray/rllib](https://share.gifyoutube.com/oVDLMk.gif)](https://youtu.be/jQ4GX_W1MZE)
 
 [![Demo Macad Multi-agent](https://share.gifyoutube.com/oVDLMk.gif)](https://www.youtube.com/watch?v=jQ4GX_W1MZE)
 
