@@ -64,6 +64,7 @@ CARLA_OUT_PATH = os.environ.get("CARLA_OUT", os.path.expanduser("~/carla_out"))
 if CARLA_OUT_PATH and not os.path.exists(CARLA_OUT_PATH):
     os.makedirs(CARLA_OUT_PATH)
 
+os.environ["CARLA_SERVER"] = "/home/s1800883/software/CarlaUE4.sh"
 # Set this to the path of your Carla binary
 SERVER_BINARY = os.environ.get(
     "CARLA_SERVER", os.path.expanduser("~/software/CARLA_0.9.4/CarlaUE4.sh"))
@@ -80,7 +81,7 @@ DEFAULT_MULTIENV_CONFIG = {
     "scenarios": "DEFAULT_SCENARIO_TOWN1",
     "env": {
         "server_map": "/Game/Carla/Maps/Town01",
-        "render": True,
+        "render": False,
         "render_x_res": 800,
         "render_y_res": 600,
         "x_res": 84,
@@ -98,7 +99,7 @@ DEFAULT_MULTIENV_CONFIG = {
     "actors": {
         "vehicle1": {
             "enable_planner": True,
-            "render": True,  # Whether to render to screen or send to VFB
+            "render": False,  # Whether to render to screen or send to VFB
             "framestack": 1,  # note: only [1, 2] currently supported
             "convert_images_to_video": False,
             "early_terminate_on_collision": True,
@@ -992,9 +993,9 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 k for k, v in self._actor_configs.items()
                 if v.get("render", False)
             ]
-            if render_required:
-                multi_view_render(obs_dict, [self._x_res, self._y_res],
-                                  self._actor_configs)
+            # if render_required:
+                # multi_view_render(obs_dict, [self._x_res, self._y_res],
+                                  # self._actor_configs)
             return obs_dict, reward_dict, self._done_dict, info_dict
         except Exception:
             print("Error during step, terminating episode early.",
