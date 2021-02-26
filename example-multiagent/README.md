@@ -13,3 +13,20 @@ Have tested that in macad-gym you can install without conflict:
 
 torch==1.4.0
 tensorflow-gpu==1.15
+
+
+For faster graphics you can change the workers-num(cpu core)
+and batch_size and step_size
+
+Also, notice the resolution (observation space) should match from the network,
+
+change that at https://github.com/praveen-palanisamy/macad-gym/blob/38884ac4bc7fb2e91a865950cff4eeadeed02f60/src/macad_gym/envs/homo/ncom/inde/po/intrx/ma/stop_sign_3c_town03.py#L17-L18
+
+with
+
+```python
+            "x_res": 168,
+            "y_res": 168,
+
+```
+you should chage both the env and the 3 actors resolution! 
