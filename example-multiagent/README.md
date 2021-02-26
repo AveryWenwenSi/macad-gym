@@ -9,6 +9,8 @@ python basic_agent.py
 Ray Result at ~/ray_results
 open website at http://localhost:8265 (127.0.0.1:8265) to see ray dashboard
 
+**Change config here: https://github.com/eerkaijun/macad-gym/blob/master/example-multiagent/basic_agent.py#L128-L153 **
+
 no additional requirements
 (maybe ray==0.6.2)
 
