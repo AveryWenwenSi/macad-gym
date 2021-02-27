@@ -37,7 +37,7 @@ H3C_CONFIGS = {
             "reward_function": "corl2017",
             "scenarios": "H3C_TOWN4_CAR1",
             "manual_control": False,
-            "auto_control": True,
+            "auto_control": False,
             "camera_type": "rgb",
             "collision_sensor": "on",
             "lane_sensor": "on",
@@ -59,7 +59,7 @@ H3C_CONFIGS = {
             "reward_function": "corl2017",
             "scenarios": "H3C_TOWN4_CAR2",
             "manual_control": False,
-            "auto_control": True,
+            "auto_control": False,
             "camera_type": "rgb",
             "collision_sensor": "on",
             "lane_sensor": "on",
@@ -81,7 +81,7 @@ H3C_CONFIGS = {
             "reward_function": "corl2017",
             "scenarios": "H3C_TOWN4_CAR3",
             "manual_control": False,
-            "auto_control": True,
+            "auto_control": False,
             "camera_type": "rgb",
             "collision_sensor": "on",
             "lane_sensor": "on",
@@ -138,6 +138,6 @@ if __name__ == "__main__":
                                   "done{}"]).format(i, reward,
                                                     total_reward_dict, done))
 
-            # time.sleep(0.1)
+            time.sleep(0.1)
 
         print("{} fps".format(i / (time.time() - start)))
