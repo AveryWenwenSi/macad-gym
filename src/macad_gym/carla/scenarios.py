@@ -126,20 +126,20 @@ H3C_TOWN4 = {
     "map": "Town04",
     "actors": {
         "car1": {
-            "start": [150, 28, 9.4],
+            "start": [150, 28, 9.7],
             "end": [170, 28, 9.4]
         },
         "car2": {
-            "start": [160, 32, 9.4],
+            "start": [160, 32, 9.7],
             "end": [170, 32, 9.4]
         },
         "car3": {
-            "start": [150, 36, 9.4],
+            "start": [150, 36, 9.7],
             "end": [170, 36, 9.4]
         }
     },
     "weather_distribution": [0],
-    "max_steps": 500
+    "max_steps": 50
 }
 # End of TAG: H3C
 
