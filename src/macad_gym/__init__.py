@@ -35,6 +35,15 @@ _AVAILABLE_ENVS = {
         "Partially-Observable Intersection Multi-Agent"
         " scenario with Traffic-Light Signal, 1-Bike, 2-Car,"
         "1-Pedestrian in Town3, version 0"
+    },
+    'Highway3Car-v0': {
+        "entry_point":
+        "macad_gym.envs:Highway3Car",
+        "description":
+        "Heterogeneous, Non-communicating, Independent,"
+        "Partially-Observable Intersection Multi-Agent"
+        " scenario with Traffic-Light Signal, 1-Bike, 2-Car,"
+        "1-Pedestrian in Town3, version 0"
     }
 }
 

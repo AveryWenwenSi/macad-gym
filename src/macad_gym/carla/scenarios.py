@@ -115,6 +115,34 @@ SUIC3_TOWN3 = {
 }
 # End of TAG: SUIC3
 
+"""Highway scenario with 3 Cars.
+CAR1: Starts almost inside the intersection, goes straight
+CAR2: Starts 90 wrt CAR1 close to intersection, turns right to merge
+CAR3: Starts behind CAR1 away from intersection, goes straight
+TAG: H3C
+"""
+
+H3C_TOWN4 = {
+    "map": "Town04",
+    "actors": {
+        "car1": {
+            "start": [150, 28, 10],
+            "end": [170, 28, 10]
+        },
+        "car2": {
+            "start": [150, 32, 10],
+            "end": [170, 32, 10]
+        },
+        "car3": {
+            "start": [150, 36, 10],
+            "end": [170, 36, 10]
+        }
+    },
+    "weather_distribution": [0],
+    "max_steps": 500
+}
+# End of TAG: H3C
+
 SUI1B2C1P_TOWN3 = {
     "map": "Town03",
     "actors": {

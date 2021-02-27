@@ -10,10 +10,13 @@ from macad_gym.envs.intersection.urban_2_car_1_ped \
 from macad_gym.envs.intersection.urban_signal_intersection_3c \
     import UrbanSignalIntersection3Car
 
+from mac_gym.envs.highway_3c import Highway3Car
+
 __all__ = [
     'MultiCarlaEnv',
     'HomoNcomIndePOIntrxMASS3CTWN3',
     'HeteNcomIndePOIntrxMATLS1B2C1PTWN3',
+    'Highway3Car',
     'UrbanSignalIntersection3Car',
     'UrbanSignalIntersection2Car1Ped1Bike',
 ]
