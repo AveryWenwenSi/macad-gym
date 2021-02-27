@@ -138,6 +138,6 @@ if __name__ == "__main__":
                                   "done{}"]).format(i, reward,
                                                     total_reward_dict, done))
 
-            time.sleep(0.1)
+            # time.sleep(0.1)
 
         print("{} fps".format(i / (time.time() - start)))
