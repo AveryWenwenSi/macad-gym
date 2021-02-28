@@ -29,13 +29,14 @@ import matplotlib.pyplot as plt
 from collections import namedtuple
 from itertools import count
 
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.nn.functional as F
+# not using torch(stable_baselines3) for this one
+# import torch
+# import torch.nn as nn
+# import torch.optim as optim
+# import torch.nn.functional as F
 
 # if gpu is to be used
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 #env = gym.make("HomoNcomIndePOIntrxMASS3CTWN3-v0")
 ##### The following is not used:
