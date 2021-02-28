@@ -1212,8 +1212,17 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
         collision_pedestrians = self._collisions[
             actor_id].collision_pedestrians
         collision_other = self._collisions[actor_id].collision_other
-        intersection_otherlane = self._lane_invasions[actor_id].offlane
-        intersection_offroad = self._lane_invasions[actor_id].offroad
+        
+        # check if lane detection is turned on or off!! (enable cars to change lanes on highway scenario)
+        
+        change_lane_enabled = cur_config["lane_sensor"]
+        if change_lane_enabled:
+            intersection_otherlane =  0     # self._lane_invasions[actor_id].offlane
+            intersection_offroad =    0     # self._lane_invasions[actor_id].offroad
+        else:
+            intersection_otherlane =  self._lane_invasions[actor_id].offlane
+            intersection_offroad =    self._lane_invasions[actor_id].offroad
+
 
         if next_command == "REACH_GOAL":
             distance_to_goal = 0.0
