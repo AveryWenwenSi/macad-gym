@@ -1239,6 +1239,20 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 self._actors[actor_id].get_location().y -
                 self._end_pos[actor_id][1],
             ]))
+        
+        # adding measurments x_axis and y_axis distance to goal
+        y_to_goal = float(
+            np.abs(
+                self._actors[actor_id].get_location().y -
+                self._end_pos[actor_id][1]
+            ))
+        x_to_goal = float(
+            np.abs(
+                self._actors[actor_id].get_location().x -
+                self._end_pos[actor_id][0]
+            ))
+        
+        
 
         py_measurements = {
             "episode_id": self._episode_id_dict[actor_id],
@@ -1267,6 +1281,9 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
             "next_command": next_command,
             "previous_action": self._previous_actions.get(actor_id, None),
             "previous_reward": self._previous_rewards.get(actor_id, None),
+
+            "x_to_goal": x_to_goal,
+            "y_to_goal": y_to_goal,
         }
 
         return py_measurements

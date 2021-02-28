@@ -17,6 +17,8 @@ class Reward(object):
             return self.compute_reward_lane_keep()
         elif flag == "custom":
             return self.compute_reward_custom()
+        elif flag == "hiway_lane_change":
+            return self.compute_reward_hiway_lane_change()
 
     def compute_reward_custom(self):
         self.reward = 0.0
@@ -84,6 +86,34 @@ class Reward(object):
         self.reward -= self.curr["intersection_otherlane"]
 
         return self.reward
+
+    # adding new reward function for hiway different scenarios 
+    def compute_reward_hiway_lane_change(self):
+        self.reward = -0.1
+        # Speed reward, up 30.0 (km/h)
+        self.reward += np.clip(self.curr["forward_speed"], 0.0, 30.0) / 10
+        # New collision damage
+        new_damage = self.curr["collision_vehicles"]  - self.prev["collision_vehicles"] 
+        if new_damage:
+            self.reward -= 100.0
+        
+        cur_dist = self.curr["distance_to_goal"]
+        prev_dist = self.prev["distance_to_goal"]
+        # Distance travelled toward the goal in m
+        self.reward += np.clip(prev_dist - cur_dist, -10.0, 10.0) *0.1
+       
+        # add more rewards for Y axis change
+        cur_dist_y = self.curr["y_to_goal"]
+        prev_dist_y = self.prev["y_to_goal"]
+        # Distance at y axis travelled toward the goal in m
+        self.reward += np.clip(prev_dist_y - cur_dist_y, -10.0, 10.0) *0.5
+
+
+        #if self.curr["next_command"] == "REACH_GOAL":
+        #    self.reward += 100
+
+        return self.reward
+
 
     def destory(self):
         pass

@@ -164,7 +164,7 @@ HC3C_TOWN4 = {
         },
         "car3": {
             "start": [150, 36, 9.7],
-            "end": [170, 28, 9.4]
+            "end": [170, 40, 9.4]
         }
     },
     "weather_distribution": [0],
