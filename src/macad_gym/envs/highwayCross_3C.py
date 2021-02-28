@@ -9,7 +9,7 @@ from macad_gym.carla.multi_env import MultiCarlaEnv
 # configs = json.load(config_file)
 
 HC3C_CONFIGS = {
-    "scenarios": "H3C_TOWN4",
+    "scenarios": "HC3C_TOWN4",
     "env": {
         "server_map": "/Game/Carla/Maps/Town04",
         "render": True,

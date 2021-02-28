@@ -143,6 +143,36 @@ H3C_TOWN4 = {
 }
 # End of TAG: H3C
 
+
+"""Highway Cross Lane scenario with 3 Cars.
+CAR1: change to car2 lane 
+CAR2: change to car3 lane
+CAR3: change to car1 lane
+TAG: HC3C
+"""
+
+HC3C_TOWN4 = {
+    "map": "Town04",
+    "actors": {
+        "car1": {
+            "start": [150, 28, 9.7],
+            "end": [170, 32, 9.4]
+        },
+        "car2": {
+            "start": [150, 32, 9.7],
+            "end": [170, 36, 9.4]
+        },
+        "car3": {
+            "start": [150, 36, 9.7],
+            "end": [170, 28, 9.4]
+        }
+    },
+    "weather_distribution": [0],
+    "max_steps": 500
+}
+# End of TAG: HC3C_TOWN4
+
+
 SUI1B2C1P_TOWN3 = {
     "map": "Town03",
     "actors": {

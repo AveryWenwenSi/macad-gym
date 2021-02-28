@@ -45,6 +45,15 @@ _AVAILABLE_ENVS = {
         " scenario with Traffic-Light Signal, 1-Bike, 2-Car,"
         "1-Pedestrian in Town3, version 0"
     }
+    'HighwayCross3Car-v0': {
+        "entry_point":
+        "macad_gym.envs:HighwayCross3Car",
+        "description":
+        "Heterogeneous, Non-communicating, Independent,"
+        "Partially-Observable Intersection Multi-Agent"
+        " scenario with Traffic-Light Signal, 1-Bike, 2-Car,"
+        "1-Pedestrian in Town3, version 0"
+    }
 }
 
 for env_id, val in _AVAILABLE_ENVS.items():
