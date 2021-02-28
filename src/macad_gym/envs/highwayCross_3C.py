@@ -24,7 +24,7 @@ HC3C_CONFIGS = {
         "use_depth_camera": False,
         "send_measurements": False,
         "enable_planner": False,
-        "spectator_loc": [150, 29, 18],
+        "spectator_loc": [145, 32, 20],
         "sync_server": True,
         "fixed_delta_seconds": 0.05,
     },
@@ -40,10 +40,10 @@ HC3C_CONFIGS = {
             "auto_control": False,
             "camera_type": "rgb",
             "collision_sensor": "on",
-            "lane_sensor": "on",
+            "lane_sensor": "off",
             "log_images": False,
             "log_measurements": False,
-            "render": False,
+            "render": True,
             #"render_x_res": 800,
             #"render_y_res": 600,
             "x_res": 84,
@@ -62,10 +62,10 @@ HC3C_CONFIGS = {
             "auto_control": False,
             "camera_type": "rgb",
             "collision_sensor": "on",
-            "lane_sensor": "on",
+            "lane_sensor": "off",
             "log_images": False,
             "log_measurements": False,
-            "render": False,
+            "render": True,
             #"render_x_res": 800,
             #"render_y_res": 600,
             "x_res": 84,
@@ -84,10 +84,10 @@ HC3C_CONFIGS = {
             "auto_control": False,
             "camera_type": "rgb",
             "collision_sensor": "on",
-            "lane_sensor": "on",
+            "lane_sensor": "off",
             "log_images": False,
             "log_measurements": False,
-            "render": False,
+            "render": True,
             #"render_x_res": 800,
             #"render_y_res": 600,
             "x_res": 84,
@@ -120,12 +120,12 @@ if __name__ == "__main__":
         for actor_id in actor_configs.keys():
             total_reward_dict[actor_id] = 0
             if env._discrete_actions:
-                import numpy as np
-                t = np.random()
+                import random
+                t = random.random()
                 if t<0.5:
-                    action_dict[actor_id] = 3  # Forward
+                    action_dict[actor_id] = 6  # Forward right
                 else:
-                    action_dict[actor_id] = 5  # Forward right/left
+                    action_dict[actor_id] = 5  # Forward left
             else:
                 action_dict[actor_id] = [1, 0]  # test values
 

@@ -168,7 +168,7 @@ HC3C_TOWN4 = {
         }
     },
     "weather_distribution": [0],
-    "max_steps": 500
+    "max_steps": 50
 }
 # End of TAG: HC3C_TOWN4
 
