@@ -148,7 +148,7 @@ ROAD_OPTION_TO_COMMANDS_MAPPING = {
 }
 
 # Threshold to determine that the goal has been reached based on distance
-DISTANCE_TO_GOAL_THRESHOLD = 0.5
+DISTANCE_TO_GOAL_THRESHOLD = 5.0
 
 # Threshold to determine that the goal has been reached based on orientation
 ORIENTATION_TO_GOAL_THRESHOLD = math.pi / 4.0
