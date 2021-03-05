@@ -36,9 +36,9 @@ _AVAILABLE_ENVS = {
         " scenario with Traffic-Light Signal, 1-Bike, 2-Car,"
         "1-Pedestrian in Town3, version 0"
     },
-    'Highway3Car-v0': {
+    'Highway7Car-v0': {
         "entry_point":
-        "macad_gym.envs:Highway3Car",
+        "macad_gym.envs:Highway7Car",
         "description":
         "Heterogeneous, Non-communicating, Independent,"
         "Partially-Observable Intersection Multi-Agent"
