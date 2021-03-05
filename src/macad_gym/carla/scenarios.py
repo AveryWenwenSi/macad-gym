@@ -122,24 +122,40 @@ CAR3: Starts behind CAR1 away from intersection, goes straight
 TAG: H3C
 """
 
-H3C_TOWN4 = {
+H7C_TOWN4 = {
     "map": "Town04",
     "actors": {
         "car1": {
-            "start": [150, 28, 9.7],
-            "end": [170, 28, 9.4]
+            "start": [-240, 26.5, 3.5],
+            "end": [200, 32, 9.4]
         },
         "car2": {
-            "start": [160, 32, 9.7],
-            "end": [170, 32, 9.4]
+            "start": [-235, 30.3, 3.5],
+            "end": [200, 32, 9.4]
         },
         "car3": {
-            "start": [150, 36, 9.7],
-            "end": [170, 36, 9.4]
-        }
+            "start": [-230, 34, 3.5],
+            "end": [200, 32, 9.4]
+        },
+        "car4": {
+            "start": [-222, 26.5, 4.5],
+            "end": [200, 32, 9.4]
+        },
+        "car5": {
+            "start": [-217, 34, 4.5],
+            "end": [200, 32, 9.4]
+        },
+        "car6": {
+            "start": [-225, 30.3, 4.5],
+            "end": [200, 32, 9.4]
+        },
+        "car7": {
+            "start": [-235, 37, 3.5],
+            "end": [200, 32, 9.4]
+        },
     },
     "weather_distribution": [0],
-    "max_steps": 50
+    "max_steps": 1000
 }
 # End of TAG: H3C
 
@@ -168,7 +184,7 @@ HC3C_TOWN4 = {
         }
     },
     "weather_distribution": [0],
-    "max_steps": 150
+    "max_steps": 300
 }
 # End of TAG: HC3C_TOWN4
 
