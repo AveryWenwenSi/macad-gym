@@ -1,11 +1,12 @@
+import os 
+os.environ['SDL_AUDIODRIVER'] = 'dsp'
+
 import gym
 import macad_gym
-
 env = gym.make("HomoNcomIndePOIntrxMASS3CTWN3-v0")
 configs = env.configs
 env_config = configs["env"]
 actor_configs = configs["actors"]
-
 
 class SimpleAgent(object):
     def __init__(self, actor_configs):
@@ -35,7 +36,9 @@ for ep in range(2):
     done = {"__all__": False}
     step = 0
     while not done["__all__"]:
+        print("Action: ", agent.get_action(obs))
         obs, reward, done, info = env.step(agent.get_action(obs))
+        print("Observation: ", obs)
         print("Step: ", step)
         print("Reward: ", reward)
         print("Done: ", done) 
