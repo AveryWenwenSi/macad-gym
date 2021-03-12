@@ -10,14 +10,14 @@ from macad_gym.envs.intersection.urban_2_car_1_ped \
 from macad_gym.envs.intersection.urban_signal_intersection_3c \
     import UrbanSignalIntersection3Car
 
-from macad_gym.envs.highway_7c import Highway7Car
+from macad_gym.envs.highway_10c import Highway10Car
 from macad_gym.envs.highwayCross_3C import HighwayCross3Car
 
 __all__ = [
     'MultiCarlaEnv',
     'HomoNcomIndePOIntrxMASS3CTWN3',
     'HeteNcomIndePOIntrxMATLS1B2C1PTWN3',
-    'Highway7Car',
+    'Highway10Car',
     'HighwayCross3Car',
     'UrbanSignalIntersection3Car',
     'UrbanSignalIntersection2Car1Ped1Bike',

@@ -8,8 +8,8 @@ from macad_gym.carla.multi_env import MultiCarlaEnv
 # config_file = open("urban_2_car_1_ped.json")
 # configs = json.load(config_file)
 
-H7C_CONFIGS = {
-    "scenarios": "H7C_TOWN4",
+H10C_CONFIGS = {
+    "scenarios": "H10C_TOWN4",
     "env": {
         "server_map": "/Game/Carla/Maps/Town04",
         "render": True,
@@ -18,13 +18,13 @@ H7C_CONFIGS = {
         "x_res": 168,
         "y_res": 168,
         "framestack": 1,
-        "discrete_actions": False,
+        "discrete_actions": True,
         "squash_action_logits": False,
         "verbose": False,
         "use_depth_camera": False,
         "send_measurements": False,
         "enable_planner": False,
-        "spectator_loc": [-250, 30, 10],
+        "spectator_loc": [-200, 30, 10],
         "sync_server": True,
         "fixed_delta_seconds": 0.05,
     },
@@ -81,7 +81,7 @@ H7C_CONFIGS = {
             "reward_function": "hiway_lane_change",
             "scenarios": "H7C_TOWN4_CAR3",
             "manual_control": False,
-            "auto_control": True,
+            "auto_control": False,
             "camera_type": "rgb",
             "collision_sensor": "on",
             "lane_sensor": "on",
@@ -103,7 +103,7 @@ H7C_CONFIGS = {
             "reward_function": "hiway_lane_change",
             "scenarios": "H7C_TOWN4_CAR4",
             "manual_control": False,
-            "auto_control": True,
+            "auto_control": False,
             "camera_type": "rgb",
             "collision_sensor": "on",
             "lane_sensor": "on",
@@ -125,7 +125,7 @@ H7C_CONFIGS = {
             "reward_function": "hiway_lane_change",
             "scenarios": "H7C_TOWN4_CAR5",
             "manual_control": False,
-            "auto_control": True,
+            "auto_control": False,
             "camera_type": "rgb",
             "collision_sensor": "on",
             "lane_sensor": "on",
@@ -148,7 +148,7 @@ H7C_CONFIGS = {
             "reward_function": "hiway_lane_change",
             "scenarios": "H7C_TOWN4_CAR6",
             "manual_control": False,
-            "auto_control": True,
+            "auto_control": False,
             "camera_type": "rgb",
             "collision_sensor": "on",
             "lane_sensor": "on",
@@ -170,7 +170,73 @@ H7C_CONFIGS = {
             "reward_function": "hiway_lane_change",
             "scenarios": "H7C_TOWN4_CAR7",
             "manual_control": False,
-            "auto_control": True,
+            "auto_control": False,
+            "camera_type": "rgb",
+            "collision_sensor": "on",
+            "lane_sensor": "on",
+            "log_images": False,
+            "log_measurements": False,
+            "render": False,
+            "render_x_res": 800,
+            "render_y_res": 600,
+            "x_res": 168,
+            "y_res": 168,
+            "use_depth_camera": False,
+            "send_measurements": False,
+        },
+        "car8": {
+            "type": "vehicle_4W",
+            "enable_planner": False,
+            "convert_images_to_video": False,
+            "early_terminate_on_collision": True,
+            "reward_function": "hiway_lane_change",
+            "scenarios": "H7C_TOWN4_CAR8",
+            "manual_control": False,
+            "auto_control": False,
+            "camera_type": "rgb",
+            "collision_sensor": "on",
+            "lane_sensor": "on",
+            "log_images": False,
+            "log_measurements": False,
+            "render": False,
+            "render_x_res": 800,
+            "render_y_res": 600,
+            "x_res": 168,
+            "y_res": 168,
+            "use_depth_camera": False,
+            "send_measurements": False,
+        },
+        "car9": {
+            "type": "vehicle_4W",
+            "enable_planner": False,
+            "convert_images_to_video": False,
+            "early_terminate_on_collision": True,
+            "reward_function": "hiway_lane_change",
+            "scenarios": "H7C_TOWN4_CAR9",
+            "manual_control": False,
+            "auto_control": False,
+            "camera_type": "rgb",
+            "collision_sensor": "on",
+            "lane_sensor": "on",
+            "log_images": False,
+            "log_measurements": False,
+            "render": False,
+            "render_x_res": 800,
+            "render_y_res": 600,
+            "x_res": 168,
+            "y_res": 168,
+            "use_depth_camera": False,
+            "send_measurements": False,
+        },
+        "car10": {
+            "type": "vehicle_4W",
+            "enable_planner": False,
+            "convert_images_to_video": False,
+            "early_terminate_on_collision": True,
+            "reward_function": "hiway_lane_change",
+            "scenarios": "H7C_TOWN4_CAR10",
+            "manual_control": False,
+            "auto_control": False,
             "camera_type": "rgb",
             "collision_sensor": "on",
             "lane_sensor": "on",
@@ -188,15 +254,15 @@ H7C_CONFIGS = {
 }
 
 
-class Highway7Car(MultiCarlaEnv):
+class Highway10Car(MultiCarlaEnv):
     """A 4-way signalized intersection Multi-Agent Carla-Gym environment"""
     def __init__(self):
-        self.configs = H7C_CONFIGS
-        super(Highway7Car, self).__init__(self.configs)
+        self.configs = H10C_CONFIGS
+        super(Highway10Car, self).__init__(self.configs)
 
 
 if __name__ == "__main__":
-    env = Highway7Car()
+    env = Highway10Car()
     configs = env.configs
     for ep in range(2):
         obs = env.reset()
