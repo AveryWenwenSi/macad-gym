@@ -115,6 +115,92 @@ SUIC3_TOWN3 = {
 }
 # End of TAG: SUIC3
 
+"""Highway scenario with 3 Cars.
+CAR1: Starts almost inside the intersection, goes straight
+CAR2: Starts 90 wrt CAR1 close to intersection, turns right to merge
+CAR3: Starts behind CAR1 away from intersection, goes straight
+TAG: H3C
+"""
+
+H10C_TOWN4 = {
+    "map": "Town04",
+    "actors": {
+        "car1": {
+            "start": [-240, 26.5, 3.5],
+            "end": [-140, 37, 7.5]
+        },
+        "car2": {
+            "start": [-235, 30.3, 3.5],
+            "end": [-140, 34, 7.5]
+        },
+        "car3": {
+            "start": [-230, 34, 3.5],
+            "end": [-140, 26.5, 7.5]
+        },
+        "car4": {
+            "start": [-173, 26.5, 7.5],
+            "end": [-173, 26.5, 7.5]
+        },
+        "car5": {
+            "start": [-185, 34, 7.5],
+            "end": [-185, 34, 7.5]
+        },
+        "car6": {
+            "start": [-148, 30.3, 7.5],
+            "end": [-148, 30.3, 7.5]
+        },
+        "car7": {
+            "start": [-150, 37, 7.5],
+            "end": [-150, 37, 7.5]
+        },
+        "car8": {
+            "start": [-173, 37, 7.5],
+            "end": [-173, 37, 7.5]
+        },
+        "car9": {
+            "start": [-160, 34, 7.5],
+            "end": [-160, 34, 7.5]
+        },
+        "car10": {
+            "start": [-195, 30.3, 7.5],
+            "end": [-195, 30.3, 7.5]
+        },
+    },
+    "weather_distribution": [0],
+    "max_steps": 1000
+}
+# End of TAG: H3C
+
+
+"""Highway Cross Lane scenario with 3 Cars.
+CAR1: change to car2 lane 
+CAR2: change to car3 lane
+CAR3: change to car1 lane
+TAG: HC3C
+"""
+
+HC3C_TOWN4 = {
+    "map": "Town04",
+    "actors": {
+        "car1": {
+            "start": [150.0, 28.0, 9.7],
+            "end": [170.0, 32.0, 9.4]
+        },
+        "car2": {
+            "start": [150.0, 32.0, 9.7],
+            "end": [170.0, 36.0, 9.4]
+        },
+        "car3": {
+            "start": [150.0, 36.0, 9.7],
+            "end": [170.0, 40.0, 9.4]
+        }
+    },
+    "weather_distribution": [0],
+    "max_steps": 65
+}
+# End of TAG: HC3C_TOWN4
+
+
 SUI1B2C1P_TOWN3 = {
     "map": "Town03",
     "actors": {

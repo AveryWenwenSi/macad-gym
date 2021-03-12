@@ -149,7 +149,7 @@ ROAD_OPTION_TO_COMMANDS_MAPPING = {
 }
 
 # Threshold to determine that the goal has been reached based on distance
-DISTANCE_TO_GOAL_THRESHOLD = 0.5
+DISTANCE_TO_GOAL_THRESHOLD = 5.0
 
 # Threshold to determine that the goal has been reached based on orientation
 ORIENTATION_TO_GOAL_THRESHOLD = math.pi / 4.0
@@ -1213,8 +1213,17 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
         collision_pedestrians = self._collisions[
             actor_id].collision_pedestrians
         collision_other = self._collisions[actor_id].collision_other
-        intersection_otherlane = self._lane_invasions[actor_id].offlane
-        intersection_offroad = self._lane_invasions[actor_id].offroad
+        
+        # check if lane detection is turned on or off!! (enable cars to change lanes on highway scenario)
+        
+        change_lane_enabled = cur_config["lane_sensor"]
+        if change_lane_enabled:
+            intersection_otherlane =  0     # self._lane_invasions[actor_id].offlane
+            intersection_offroad =    0     # self._lane_invasions[actor_id].offroad
+        else:
+            intersection_otherlane =  self._lane_invasions[actor_id].offlane
+            intersection_offroad =    self._lane_invasions[actor_id].offroad
+
 
         if next_command == "REACH_GOAL":
             distance_to_goal = 0.0
@@ -1231,6 +1240,20 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 self._actors[actor_id].get_location().y -
                 self._end_pos[actor_id][1],
             ]))
+        
+        # adding measurments x_axis and y_axis distance to goal
+        y_to_goal = float(
+            np.abs(
+                self._actors[actor_id].get_location().y -
+                self._end_pos[actor_id][1]
+            ))
+        x_to_goal = float(
+            np.abs(
+                self._actors[actor_id].get_location().x -
+                self._end_pos[actor_id][0]
+            ))
+        
+        
 
         py_measurements = {
             "episode_id": self._episode_id_dict[actor_id],
@@ -1259,6 +1282,9 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
             "next_command": next_command,
             "previous_action": self._previous_actions.get(actor_id, None),
             "previous_reward": self._previous_rewards.get(actor_id, None),
+
+            "x_to_goal": x_to_goal,
+            "y_to_goal": y_to_goal,
         }
 
         return py_measurements
