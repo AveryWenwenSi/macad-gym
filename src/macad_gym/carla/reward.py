@@ -180,9 +180,9 @@ class Reward(object):
                         print("-----out in 1.0 range")
                 
         
-        if self.curr["car_id"] ==1:
-            print("car ", self.curr["car_id"], " has reward of: ", self.reward)
-            print("cyrrennt y position is: ", y, "  goal y pos is:  ", goal_y)
+        #if self.curr["car_id"] ==1:
+        #    print("car ", self.curr["car_id"], " has reward of: ", self.reward)
+        #    print("cyrrennt y position is: ", y, "  goal y pos is:  ", goal_y)
         
         return self.reward
 
