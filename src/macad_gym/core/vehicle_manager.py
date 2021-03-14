@@ -30,23 +30,40 @@ COMMANDS_ENUM = {
 
 DISCRETE_ACTIONS = {
     # coast
-    0: [0.0, 0.0],
+    #0: [0.0, 0.0],
     # turn left
-    1: [0.0, -0.5],
+    #1: [0.0, -0.5],
     # turn right
-    2: [0.0, 0.5],
+    #2: [0.0, 0.5],
     # forward
-    3: [1.0, 0.0],
+    #3: [1.0, 0.0],
     # brake
-    4: [-0.5, 0.0],
+    #4: [-0.5, 0.0],
     # forward left
-    5: [0.5, -0.05],
+    #5: [0.5, -0.05],
     # forward right
-    6: [0.5, 0.05],
+    #6: [0.5, 0.05],
     # brake left
-    7: [-0.5, -0.5],
+    #7: [-0.5, -0.5],
     # brake right
-    8: [-0.5, 0.5],
+    #8: [-0.5, 0.5],
+
+    
+    
+    # forward
+    0: [1.0, 0.0],
+    # forward left
+    1: [0.5, -0.05],
+    # forward right
+    2: [0.5, 0.05],
+    # coast
+    #3: [0.0, 0.0],
+    
+    # # if you want more left and more right!! (auto-drifting?)
+    # turn left
+    3: [0.0, -0.5],
+    # turn right
+    4: [0.0, 0.5],
 }
 
 GROUND_Z = 22

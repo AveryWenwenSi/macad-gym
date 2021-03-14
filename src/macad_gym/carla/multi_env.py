@@ -161,23 +161,40 @@ GROUND_Z = 22
 
 DISCRETE_ACTIONS = {
     # coast
-    0: [0.0, 0.0],
+    #0: [0.0, 0.0],
     # turn left
-    1: [0.0, -0.5],
+    #1: [0.0, -0.5],
     # turn right
-    2: [0.0, 0.5],
+    #2: [0.0, 0.5],
     # forward
-    3: [1.0, 0.0],
+    #3: [1.0, 0.0],
     # brake
-    4: [-0.5, 0.0],
+    #4: [-0.5, 0.0],
     # forward left
-    5: [0.5, -0.05],
+    #5: [0.5, -0.05],
     # forward right
-    6: [0.5, 0.05],
+    #6: [0.5, 0.05],
     # brake left
-    7: [-0.5, -0.5],
+    #7: [-0.5, -0.5],
     # brake right
-    8: [-0.5, 0.5],
+    #8: [-0.5, 0.5],
+
+    
+    
+    # forward
+    0: [1.0, 0.0],
+    # forward left
+    1: [0.5, -0.05],
+    # forward right
+    2: [0.5, 0.05],
+    
+    # # if you want more left and more right!! (auto-drifting?)
+    # turn left
+    3: [0.0, -0.5],
+    # turn right
+    4: [0.0, 0.5],
+    # coast
+    #3: [0.0, 0.0],
 }
 
 WEATHERS = {
@@ -287,6 +304,8 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
         self._cameras = {}
         self._sync_server = self._env_config["sync_server"]
         self._fixed_delta_seconds = self._env_config["fixed_delta_seconds"]
+
+        self.location = [0.,0.,0.]
 
         # self.config["server_map"] = "/Game/Carla/Maps/" + args.map
 
@@ -505,6 +524,8 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
             a = math.radians(angle)
             location = (carla.Location(d * math.cos(a), d * math.sin(a), 2.0) +
                         spectator_loc)
+            
+            self.location = location
             spectator.set_transform(
                 carla.Transform(location,
                                 carla.Rotation(yaw=180 + angle, pitch=-15)))
@@ -926,6 +947,10 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
         return obs
 
     def step(self, action_dict):
+
+        self.location = (carla.Location(0.1,0.,0.) + self.location)
+
+        self.world.get_spectator().set_transform(carla.Transform(self.location,carla.Rotation(yaw=180 + 160, pitch=-15)))
         """Execute one environment step for the specified actors.
 
         Executes the provided action for the corresponding actors in the
@@ -1259,6 +1284,15 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
             "step": self._num_steps[actor_id],
             "x": self._actors[actor_id].get_location().x,
             "y": self._actors[actor_id].get_location().y,
+
+            "goal_x": self._end_pos[actor_id][0],
+            "goal_y": self._end_pos[actor_id][1],
+
+            "start_x": self._start_pos[actor_id][0],
+            "start_y": self._start_pos[actor_id][1],
+
+            "car_id": int(actor_id.split("car")[1]),
+
             "pitch": self._actors[actor_id].get_transform().rotation.pitch,
             "yaw": self._actors[actor_id].get_transform().rotation.yaw,
             "roll": self._actors[actor_id].get_transform().rotation.roll,

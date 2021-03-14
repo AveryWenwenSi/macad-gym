@@ -89,13 +89,13 @@ class Reward(object):
 
     # adding new reward function for hiway different scenarios 
     def compute_reward_hiway_lane_change(self):
-        self.reward = 0.0
+        self.reward = -0.01
 
         ## !! Here, spped also should not taken into considerations
         # Speed reward, up 30.0 (km/h)   ---on highway no limits on speed
         # self.reward +=  self.curr["forward_speed"] / 100.0
-        # self.reward += 0.05 * (
-        #     self.curr["forward_speed"] - self.prev["forward_speed"])     #instead using v, use a(acceleraion)
+        self.reward += 0.05 * (
+            self.curr["forward_speed"] - self.prev["forward_speed"])     #instead using v, use a(acceleraion)
 
         # New collision damage
         new_damage = self.curr["collision_vehicles"]  - self.prev["collision_vehicles"] 
@@ -115,10 +115,9 @@ class Reward(object):
 
         cur_dist_x = self.curr["x_to_goal"]
         prev_dist_x = self.prev["x_to_goal"]
-        # Distance at y axis travelled toward the goal in m
         
-
-        # self.reward += np.clip(prev_dist_y - cur_dist_y, -10.0, 10.0) * 0.5
+        # Distance at y axis travelled toward the goal in m
+        self.reward += np.clip(prev_dist_y - cur_dist_y, -10.0, 10.0) * 0.5
         
         ############
         y_diff = np.clip(prev_dist_y - cur_dist_y, -10.0, 10.0) +0.001
@@ -144,45 +143,67 @@ class Reward(object):
         #    self.reward -=0.01             # penalizing constant change of action
 
         goal_y = self.curr["goal_y"]
-        y = self.curr["y"]
+        y = self.curr["y"] +0.001
         start_y = self.curr["start_y"]
-
+        
+        debug_car_id = 2
         #
-        if (y - start_y)/ (goal_y - start_y) < -0.0 :     # not going in the same direction
-            self.reward -= 10.0
+        if (y - start_y)/ (goal_y - start_y) < 0 :     # not going in the same direction
+            if np.abs(y - start_y) >= 2.0: 
+                self.reward -= 100.0
+            elif np.abs(y - start_y) >= 1.0: 
+                self.reward -= 10.0
+            elif np.abs(y - start_y) >= 0.5:
+                self.reward -= 1.0 
+            elif np.abs(y - start_y) >= 0.1:
+                self.reward -= 0.1 
         else:                                              # going in the same direction 
 
             if (goal_y - y)* (goal_y - start_y) > 0.0 :     # going inside the expected trajectory range
-                if np.abs(goal_y - y) <= 0.1:
-                    self.reward += 10.0
-                    if self.curr["car_id"] ==1:
+                if np.abs(goal_y - y) <= 0.1:               # consider goal achieved!!!!
+                    self.reward += 100.0
+                    if self.curr["car_id"] ==debug_car_id:
                         print("closer in 0.1 range")
                 elif np.abs(goal_y - y) <= 0.5:
-                    self.reward += 5.0
-                    if self.curr["car_id"] ==1:
+                    self.reward += 20.0
+                    if self.curr["car_id"] ==debug_car_id:
                         print("closer in 0.5 range")
                 elif np.abs(goal_y - y) <= 1.0:
-                    self.reward += 1.0
-                    if self.curr["car_id"] ==1:
+                    self.reward += 10.0
+                    if self.curr["car_id"] ==debug_car_id:
                         print("closer in 1.0 range")
+                elif np.abs(goal_y - y) <= 2.0:
+                    self.reward += 1.0
+                    if self.curr["car_id"] ==debug_car_id:
+                        print("closer in 2.0 range")
+                elif np.abs(goal_y - y) <= 3.0:
+                    self.reward += 0.1
+                    if self.curr["car_id"] ==debug_car_id:
+                        print("closer in 2.0 range")
+
             else:
-                if np.abs(goal_y - y) > 0.1:
-                    self.reward -= 1.0
-                    if self.curr["car_id"] ==1:
-                        print("----out in 0.1 range")
-                elif np.abs(goal_y - y) > 0.5:
-                    self.reward -= 5.0
-                    if self.curr["car_id"] ==1:
-                        print("----out in 0.5 range")
-                elif np.abs(goal_y - y) > 1.0:
+                if np.abs(goal_y - y) > 4.0:
+                    self.reward -= 100.0
+                    if self.curr["car_id"] ==debug_car_id:
+                        print("-----out in 4.0 range")
+
+                elif np.abs(goal_y - y) > 2.0:
                     self.reward -= 10.0
-                    if self.curr["car_id"] ==1:
-                        print("-----out in 1.0 range")
+                    if self.curr["car_id"] ==debug_car_id:
+                        print("-----out in 2.0 range")
+                
+                elif np.abs(goal_y - y) > 1.0:
+                    self.reward -= 1.0
+                    if self.curr["car_id"] ==debug_car_id:
+                        print("----out in 1.0 range")
+                
+                
+                
                 
         
-        if self.curr["car_id"] ==1:
-            print("car ", self.curr["car_id"], " has reward of: ", self.reward)
-            print("cyrrennt y position is: ", y, "  goal y pos is:  ", goal_y)
+        if self.curr["car_id"] ==debug_car_id:
+            print("For time step: ",self.curr["step"], " ,car ", self.curr["car_id"], " has reward of: ", self.reward)
+            print("currennt y position is: ", y, "  goal y pos is:  ", goal_y)
         
         return self.reward
 

@@ -60,14 +60,14 @@ ModelCatalog.register_custom_preprocessor("sq_im_84", ImagePreproc)
 ray.init()
 
 obs_space = Box(0.0, 255.0, shape=(84, 84, 3))
-act_space = Discrete(9)
+act_space = Discrete(5)
 
 
-num_iters = 20         #
+num_iters = 2         #
 num_workers = 1        #Num workers (CPU cores) to use
 num_gpus = 1           #
 sample_bs_per_worker = 50   # Number of samples in a batch per worker. Default=50
-train_bs = 150              # Train batch size. Use as per available GPU mem. Default=500   ----must>=128
+train_bs = 200              # Train batch size. Use as per available GPU mem. Default=500   ----must>=128
 envs_per_worker = 1         # Number of env instances per worker. Default=10
 notes = None                # Custom experiment description to be added to comet logs
 
@@ -76,6 +76,9 @@ model_name = "mnih15_shared_weights"
 
 env_name = "HighwayCross3Car-v0"
 env = gym.make(env_name)
+#from macad_gym.envs.highwayCross_3C import HighwayCross3Car
+#env_scenario = HighwayCross3Car()
+#env_actor_configs = env_scenario.configs
 env_actor_configs = env.configs
 num_framestack = env_actor_configs["env"]["framestack"]
 
@@ -130,7 +133,12 @@ run_experiments({
     "MA-PPO-SSUI3CCARLA": {
         "run": "PPO",
         "env": env_name,
+        #max_failures=100,
+        #resume=True,
+        "restore": "/home/jerry/ray_results/MA-PPO-SSUI3CCARLA/PPO_HighwayCross3Car-v0_0_2021-03-05_00-24-21bt31p0tk/checkpoint_320/checkpoint-320",
         "stop": {
+            # "episode_reward_mean": 0,
+            # "timesteps_total": 1000,
             "training_iteration": num_iters
         },
         "config": {
@@ -141,6 +149,8 @@ run_experiments({
                 "policy_mapping_fn":
                 tune.function(lambda agent_id: agent_id),
             },
+
+            #"num_gpus": num_gpus,      #training already took much gpu, preferably no gpu for trail
             "num_workers": num_workers,
             "num_envs_per_worker": envs_per_worker,
             "sample_batch_size": sample_bs_per_worker,
