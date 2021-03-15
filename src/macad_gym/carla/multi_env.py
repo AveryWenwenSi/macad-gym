@@ -406,7 +406,7 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 # Check if vglrun is setup to launch sim on multipl GPUs
                 if shutil.which("vglrun") is not None:
                     self._server_process = subprocess.Popen(
-                        ("DISPLAY=:8 vglrun -d :7.{} {} {} -benchmark -fps=20"
+                        ("DISPLAY=:8 vglrun -d :7.{} {} {} -benchmark -fps=5"
                          " -carla-server -world-port={}"
                          " -carla-streaming-port=0".format(
                              min_index,
@@ -423,7 +423,7 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 else:
                     self._server_process = subprocess.Popen(
                         ("SDL_VIDEODRIVER=offscreen SDL_HINT_CUDA_DEVICE={}"
-                         " {} {} -benchmark -fps=20 -carla-server"
+                         " {} {} -benchmark -fps=5 -carla-server"
                          " -world-port={} -carla-streaming-port=0".format(
                              min_index,
                              SERVER_BINARY,
@@ -460,7 +460,7 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                         str(self._env_config["render_x_res"]),
                         "-ResY=",
                         str(self._env_config["render_y_res"]),
-                        "-benchmark -fps=20",
+                        "-benchmark -fps=5",
                         "-carla-server",
                         "-carla-world-port={} -carla-streaming-port=0".format(
                             self._server_port),
@@ -919,7 +919,10 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
             COMMAND_ORDINAL[py_measurements["next_command"]],
             [
                 py_measurements["forward_speed"],
-                py_measurements["distance_to_goal"]
+                py_measurements["distance_to_goal"],
+                py_measurements["yaw"],
+                py_measurements["pitch"],
+                py_measurements["roll"]
             ],
         )
 
@@ -1213,9 +1216,9 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
         collision_pedestrians = self._collisions[
             actor_id].collision_pedestrians
         collision_other = self._collisions[actor_id].collision_other
-        
+
         # check if lane detection is turned on or off!! (enable cars to change lanes on highway scenario)
-        
+
         change_lane_enabled = cur_config["lane_sensor"]
         if change_lane_enabled:
             intersection_otherlane =  0     # self._lane_invasions[actor_id].offlane
@@ -1240,7 +1243,7 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 self._actors[actor_id].get_location().y -
                 self._end_pos[actor_id][1],
             ]))
-        
+
         # adding measurments x_axis and y_axis distance to goal
         y_to_goal = float(
             np.abs(
@@ -1252,8 +1255,8 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 self._actors[actor_id].get_location().x -
                 self._end_pos[actor_id][0]
             ))
-        
-        
+
+
 
         py_measurements = {
             "episode_id": self._episode_id_dict[actor_id],
