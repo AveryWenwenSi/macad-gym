@@ -406,7 +406,7 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 # Check if vglrun is setup to launch sim on multipl GPUs
                 if shutil.which("vglrun") is not None:
                     self._server_process = subprocess.Popen(
-                        ("DISPLAY=:8 vglrun -d :7.{} {} {} -benchmark -fps=5"
+                        ("DISPLAY=:8 vglrun -d :7.{} {} {} -benchmark -fps=20"
                          " -carla-server -world-port={}"
                          " -carla-streaming-port=0".format(
                              min_index,
@@ -423,7 +423,7 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 else:
                     self._server_process = subprocess.Popen(
                         ("SDL_VIDEODRIVER=offscreen SDL_HINT_CUDA_DEVICE={}"
-                         " {} {} -benchmark -fps=5 -carla-server"
+                         " {} {} -benchmark -fps=20 -carla-server"
                          " -world-port={} -carla-streaming-port=0".format(
                              min_index,
                              SERVER_BINARY,
@@ -460,7 +460,7 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                         str(self._env_config["render_x_res"]),
                         "-ResY=",
                         str(self._env_config["render_y_res"]),
-                        "-benchmark -fps=5",
+                        "-benchmark -fps=20",
                         "-carla-server",
                         "-carla-world-port={} -carla-streaming-port=0".format(
                             self._server_port),
