@@ -1185,6 +1185,9 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 or py_measurements["next_command"] == "REACH_GOAL"
                 or (config["early_terminate_on_collision"]
                     and collided_done(py_measurements)))
+        static = ["car4", "car5", "car7", "car8","car9","car10"]
+        if actor_id in static:
+            done = True
         py_measurements["done"] = done
 
         self._prev_measurement[actor_id] = py_measurements
