@@ -865,8 +865,27 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 if cam.image is None:
                     print("callback_count:", actor_id, ":", cam.callback_count)
                 image = preprocess_image(cam.image, actor_config)
-                obs = self._encode_obs(actor_id, image, py_measurement)
+                #obs = self._encode_obs(actor_id, image, py_measurement)
+                obs = np.array([py_measurement['x'], py_measurement['y'], py_measurement['distance_to_goal'],py_measurement['yaw'], py_measurement['pitch'], py_measurement['roll']])
                 self._obs_dict[actor_id] = obs
+
+        obs_dict_copy = self._obs_dict.copy()
+
+        for actor_id, obs in obs_dict_copy.items():
+            distance_to_other_agents = {}
+            for other_actor_id, other_obs in obs_dict_copy.items():
+                if (actor_id == other_actor_id):
+                    pass
+                else:
+                    distance_to_other_agents[other_actor_id] = float(np.linalg.norm([
+                        obs[0] - other_obs[0],
+                        obs[1] - other_obs[1]
+                    ]))
+            for i in range(3): # find the three closest agents
+                # closest is the actor id
+                closest = min(distance_to_other_agents, key=distance_to_other_agents.get)
+                self._obs_dict[actor_id] = np.vstack((self._obs_dict[actor_id],obs_dict_copy[closest]))
+                del distance_to_other_agents[closest]
 
         return self._obs_dict
 
