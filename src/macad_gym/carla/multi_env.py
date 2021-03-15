@@ -988,6 +988,25 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 if done:
                     self._dones.add(actor_id)
                 info_dict[actor_id] = info
+
+            obs_dict_copy = obs_dict.copy()
+
+            for actor_id, obs in obs_dict_copy.items():
+                distance_to_other_agents = {}
+                for other_actor_id, other_obs in obs_dict_copy.items():
+                    if (actor_id == other_actor_id):
+                        pass
+                    else:
+                        distance_to_other_agents[other_actor_id] = float(np.linalg.norm([
+                                obs[0] - other_obs[0],
+                                obs[1] - other_obs[1]
+                            ]))
+                for i in range(3): # find the three closest agents
+                    # closest is the actor id
+                    closest = min(distance_to_other_agents, key=distance_to_other_agents.get)
+                    obs_dict[actor_id] = np.vstack((obs_dict[actor_id],obs_dict_copy[closest]))
+                    del distance_to_other_agents[closest]
+
             self._done_dict["__all__"] = len(self._dones) == len(self._actors)
             # Find if any actor's config has render=True & render only for
             # that actor. NOTE: with async server stepping, enabling rendering
@@ -1171,7 +1190,8 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
         image = preprocess_image(original_image, config)
 
         return (
-            self._encode_obs(actor_id, image, py_measurements),
+            np.array([py_measurements['x'], py_measurements['y'], py_measurements['distance_to_goal'],py_measurements['yaw'], py_measurements['pitch'], py_measurements['roll']]),
+            #self._encode_obs(actor_id, image, py_measurements),
             reward,
             done,
             py_measurements,
