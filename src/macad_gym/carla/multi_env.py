@@ -869,11 +869,16 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 obs = np.array([py_measurement['x'], py_measurement['y'], py_measurement['distance_to_goal'],py_measurement['yaw'], py_measurement['pitch'], py_measurement['roll']])
                 self._obs_dict[actor_id] = obs
 
-        obs_dict_copy = self._obs_dict.copy()
-
-        for actor_id, obs in obs_dict_copy.items():
+        #obs_dict_copy = self._obs_dict.copy()
+        agent_ids = ["car1","car2","car3"]
+        obs_dict = {}
+        obs_dict["car1"] = self._obs_dict["car1"]
+        obs_dict["car2"] = self._obs_dict["car2"]
+        obs_dict["car3"] = self._obs_dict["car3"]
+        for actor_id in agent_ids:
+            obs = self._obs_dict[actor_id]
             distance_to_other_agents = {}
-            for other_actor_id, other_obs in obs_dict_copy.items():
+            for other_actor_id, other_obs in self._obs_dict.items():
                 if (actor_id == other_actor_id):
                     pass
                 else:
@@ -884,10 +889,10 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
             for i in range(3): # find the three closest agents
                 # closest is the actor id
                 closest = min(distance_to_other_agents, key=distance_to_other_agents.get)
-                self._obs_dict[actor_id] = np.vstack((self._obs_dict[actor_id],obs_dict_copy[closest]))
+                obs_dict[actor_id] = np.vstack((obs_dict[actor_id],self._obs_dict[closest]))
                 del distance_to_other_agents[closest]
 
-        return self._obs_dict
+        return obs_dict
 
     def _load_scenario(self, scenario_parameter):
         self._scenario_map = {}
@@ -1008,11 +1013,13 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                     self._dones.add(actor_id)
                 info_dict[actor_id] = info
 
-            obs_dict_copy = obs_dict.copy()
-
-            for actor_id, obs in obs_dict_copy.items():
+            #obs_dict_copy = obs_dict.copy()
+            self._obs_dict["car1"] = obs_dict["car1"]
+            self._obs_dict["car2"] = obs_dict["car2"]
+            self._obs_dict["car3"] = obs_dict["car3"]
+            for actor_id, obs in obs_dict.items():
                 distance_to_other_agents = {}
-                for other_actor_id, other_obs in obs_dict_copy.items():
+                for other_actor_id, other_obs in self._obs_dict.items():
                     if (actor_id == other_actor_id):
                         pass
                     else:
@@ -1020,10 +1027,11 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                                 obs[0] - other_obs[0],
                                 obs[1] - other_obs[1]
                             ]))
+
                 for i in range(3): # find the three closest agents
                     # closest is the actor id
                     closest = min(distance_to_other_agents, key=distance_to_other_agents.get)
-                    obs_dict[actor_id] = np.vstack((obs_dict[actor_id],obs_dict_copy[closest]))
+                    obs_dict[actor_id] = np.vstack((obs_dict[actor_id],self._obs_dict[closest]))
                     del distance_to_other_agents[closest]
 
             self._done_dict["__all__"] = len(self._dones) == len(self._actors)
