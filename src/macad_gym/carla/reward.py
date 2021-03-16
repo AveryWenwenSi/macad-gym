@@ -95,6 +95,8 @@ class Reward(object):
         prev_dist = self.prev["distance_to_goal"]
         # Distance travelled toward the goal in m
         self.reward += np.clip(prev_dist - cur_dist, -10.0, 10.0)
+        if (cur_dist - prev_dist == 0):
+            self.reward -= 0.1
         # Change in speed (km/h)
         self.reward += 0.05 * (
             self.curr["forward_speed"] - self.prev["forward_speed"])
@@ -103,7 +105,7 @@ class Reward(object):
         new_damage = self.curr["collision_vehicles"]  - self.prev["collision_vehicles"]
         if new_damage:
             self.reward -= 100.0
-            
+
         return self.reward
 
 
