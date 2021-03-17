@@ -37,12 +37,12 @@ DISCRETE_ACTIONS = {
     2: [0.0, 0.5],
     # forward
     3: [1.0, 0.0],
-    # brake
-    4: [-0.5, 0.0],
     # forward left
-    5: [0.5, -0.05],
+    4: [0.5, -0.05],
     # forward right
-    6: [0.5, 0.05],
+    5: [0.5, 0.05],
+    # brake
+    6: [-0.5, 0.0],
     # brake left
     7: [-0.5, -0.5],
     # brake right
