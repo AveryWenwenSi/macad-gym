@@ -89,12 +89,11 @@ class Reward(object):
 
     # adding new reward function for hiway different scenarios
     def compute_reward_hiway_lane_change(self):
-        self.reward = 0.0
+        cur_dist = self.curr["distance_to_goal_euclidean"]
+        prev_dist = self.prev["distance_to_goal_euclidean"]
 
-        cur_dist = self.curr["distance_to_goal"]
-        prev_dist = self.prev["distance_to_goal"]
         # Distance travelled toward the goal in m
-        self.reward += np.clip(prev_dist - cur_dist, -10.0, 10.0)
+        self.reward = np.clip(prev_dist - cur_dist, -10.0, 10.0)
         #if (cur_dist - prev_dist == 0):
         #    self.reward -= 0.5
         # Change in speed (km/h)
@@ -105,7 +104,6 @@ class Reward(object):
         new_damage = self.curr["collision_vehicles"]  - self.prev["collision_vehicles"]
         if new_damage:
             self.reward -= 50.0
-
         return self.reward
 
 
