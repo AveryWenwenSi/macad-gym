@@ -89,22 +89,24 @@ class Reward(object):
 
     # adding new reward function for hiway different scenarios
     def compute_reward_hiway_lane_change(self):
-        cur_dist = self.curr["distance_to_goal_euclidean"]
-        prev_dist = self.prev["distance_to_goal_euclidean"]
+        # print(self.curr["distance_to_others"])
+        # print(self.curr["distance_to_others"].values())
+        # print(self.curr["distance_to_lane"])
 
-        # Distance travelled toward the goal in m
-        self.reward = np.clip(prev_dist - cur_dist, -10.0, 10.0)
-        #if (cur_dist - prev_dist == 0):
-        #    self.reward -= 0.5
-        # Change in speed (km/h)
-        #self.reward += 0.05 * (
-        #    self.curr["forward_speed"] - self.prev["forward_speed"])
-        self.reward += 0.2 * self.curr["forward_speed"]
-        # New collision damage
-        new_damage = self.curr["collision_vehicles"]  - self.prev["collision_vehicles"]
-        if new_damage:
-            self.reward -= 50.0
-        return self.reward
+        distance_to_goal = self.curr["distance_to_goal_euclidean"]
+        distance_to_lane = self.curr["distance_to_lane"]
+        speed = self.curr["forward_speed"]
+        collision_any = self.curr["collision_vehicles"] or self.curr["collision_pedestrians"] or self.curr["collision_other"]
+
+        distance_to_others = np.array(list(self.curr["distance_to_others"].values()))
+
+        distance_reward = -0.5 * distance_to_goal
+        speed_reward = 0.75 * speed
+        collision_reward = -100 * collision_any
+        distance_cars_reward = -15 * np.any(distance_to_others < 3.5)
+        lane_keep_reward = -np.exp(0.4 * distance_to_lane) + 1
+
+        return sum([distance_reward, speed_reward, collision_reward, distance_cars_reward, lane_keep_reward])
 
 
     def destory(self):
