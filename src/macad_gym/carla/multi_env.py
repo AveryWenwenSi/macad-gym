@@ -64,7 +64,7 @@ CARLA_OUT_PATH = os.environ.get("CARLA_OUT", os.path.expanduser("~/carla_out"))
 if CARLA_OUT_PATH and not os.path.exists(CARLA_OUT_PATH):
     os.makedirs(CARLA_OUT_PATH)
 
-os.environ["CARLA_SERVER"] = "/home/s1800883/software/CarlaUE4.sh"
+# os.environ["CARLA_SERVER"] = "/home/s1800883/software/CarlaUE4.sh"
 # Set this to the path of your Carla binary
 SERVER_BINARY = os.environ.get(
     "CARLA_SERVER", os.path.expanduser("~/software/CARLA_0.9.4/CarlaUE4.sh"))
@@ -1306,7 +1306,25 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
                 self._end_pos[actor_id][0]
             ))
 
+        distance_to_others = {}
+        for actor in self._actors:
+            if actor != actor_id:
+                distance_to_others[actor] = np.sqrt((self._actors[actor].get_location().x - self._actors[actor_id].get_location().x)**2 + (self._actors[actor].get_location().y - self._actors[actor_id].get_location().y)**2)
 
+        # the centre line in each lane can be defined by [a, b, c] e.g. ax + by + c = 0
+        # in each lane, y does not change, only x
+        lanes = {"lane1": [0, 1, -37.9],
+                 "lane2": [0, 1, -34.1],
+                 "lane3": [0, 1, -30.3],
+                 "lane4": [0, 1, -26.5]}
+
+        vals = lanes["lane1"]
+        distance_to_lane = np.abs(vals[0] * self._actors[actor_id].get_location().x + vals[1] * self._actors[actor_id].get_location().y + vals[2]) / np.sqrt(vals[0]**2 + vals[1]**2)
+        for lane in lanes:
+            vals = lanes[lane]
+            d2 = np.abs(vals[0] * self._actors[actor_id].get_location().x + vals[1] * self._actors[actor_id].get_location().y + vals[2]) / np.sqrt(np.sqrt(vals[0]**2 + vals[1]**2))
+            if d2 < distance_to_lane:
+                distance_to_lane = d2
 
         py_measurements = {
             "episode_id": self._episode_id_dict[actor_id],
@@ -1340,9 +1358,10 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
             "next_command": next_command,
             "previous_action": self._previous_actions.get(actor_id, None),
             "previous_reward": self._previous_rewards.get(actor_id, None),
-
             "x_to_goal": x_to_goal,
             "y_to_goal": y_to_goal,
+            "distance_to_others": distance_to_others,
+            "distance_to_lane": distance_to_lane,
         }
 
         return py_measurements
