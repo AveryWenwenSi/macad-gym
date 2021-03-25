@@ -186,12 +186,12 @@ class Reward(object):
                     self.reward -= 100.0
                     if self.curr["car_id"] ==debug_car_id:
                         #print("-----out in 4.0 range")
-
+                
                 elif np.abs(goal_y - y) > 2.0:
                     self.reward -= 10.0
                     if self.curr["car_id"] ==debug_car_id:
                         #print("-----out in 2.0 range")
-                
+                        # 
                 elif np.abs(goal_y - y) > 1.0:
                     self.reward -= 1.0
                     if self.curr["car_id"] ==debug_car_id:
