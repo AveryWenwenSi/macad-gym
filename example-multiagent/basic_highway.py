@@ -63,9 +63,9 @@ obs_space = Box(0.0, 255.0, shape=(84, 84, 3))
 act_space = Discrete(5)
 
 
-num_iters = 2         #
-num_workers = 1        #Num workers (CPU cores) to use
-num_gpus = 1           #
+num_iters = 10000         #
+num_workers = 6       #Num workers (CPU cores) to use
+num_gpus = 4           #
 sample_bs_per_worker = 50   # Number of samples in a batch per worker. Default=50
 train_bs = 200              # Train batch size. Use as per available GPU mem. Default=500   ----must>=128
 envs_per_worker = 1         # Number of env instances per worker. Default=10
@@ -135,7 +135,7 @@ run_experiments({
         "env": env_name,
         #max_failures=100,
         #resume=True,
-        "restore": "/home/jerry/ray_results/MA-PPO-SSUI3CCARLA/PPO_HighwayCross3Car-v0_0_2021-03-05_00-24-21bt31p0tk/checkpoint_320/checkpoint-320",
+        #"restore": "/home/jerry/ray_results/MA-PPO-SSUI3CCARLA/PPO_HighwayCross3Car-v0_0_2021-03-05_00-24-21bt31p0tk/checkpoint_320/checkpoint-320",
         "stop": {
             # "episode_reward_mean": 0,
             # "timesteps_total": 1000,
@@ -156,7 +156,7 @@ run_experiments({
             "sample_batch_size": sample_bs_per_worker,
             "train_batch_size": train_bs
         },
-        "checkpoint_freq": 5,
+        "checkpoint_freq": 10,
         "checkpoint_at_end": True,
     }
 })
