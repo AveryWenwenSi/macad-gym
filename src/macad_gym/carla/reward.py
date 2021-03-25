@@ -158,46 +158,31 @@ class Reward(object):
             elif np.abs(y - start_y) >= 0.1:
                 self.reward -= 0.1 
         else:                                              # going in the same direction 
-
+            
             if (goal_y - y)* (goal_y - start_y) > 0.0 :     # going inside the expected trajectory range
                 if np.abs(goal_y - y) <= 0.1:               # consider goal achieved!!!!
                     self.reward += 100.0
-                    if self.curr["car_id"] ==debug_car_id:
-                        #print("closer in 0.1 range")
                 elif np.abs(goal_y - y) <= 0.5:
                     self.reward += 20.0
-                    if self.curr["car_id"] ==debug_car_id:
-                        #print("closer in 0.5 range")
-                elif np.abs(goal_y - y) <= 1.0:
+                elif np.abs(goal_y - y) <= 1.0：
                     self.reward += 10.0
-                    if self.curr["car_id"] ==debug_car_id:
-                        #print("closer in 1.0 range")
                 elif np.abs(goal_y - y) <= 2.0:
                     self.reward += 1.0
-                    if self.curr["car_id"] ==debug_car_id:
-                        #print("closer in 2.0 range")
                 elif np.abs(goal_y - y) <= 3.0:
                     self.reward += 0.1
-                    if self.curr["car_id"] ==debug_car_id:
-                        #print("closer in 2.0 range")
 
             else:
                 if np.abs(goal_y - y) > 4.0:
                     self.reward -= 100.0
-                    if self.curr["car_id"] ==debug_car_id:
-                        #print("-----out in 4.0 range")
+                    
                 
                 elif np.abs(goal_y - y) > 2.0:
                     self.reward -= 10.0
-                    if self.curr["car_id"] ==debug_car_id:
-                        #print("-----out in 2.0 range")
+                   
                         # 
                 elif np.abs(goal_y - y) > 1.0:
                     self.reward -= 1.0
-                    if self.curr["car_id"] ==debug_car_id:
-                        #print("----out in 1.0 range")
-                
-                
+                   
                 
                 
         
