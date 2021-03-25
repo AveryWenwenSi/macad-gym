@@ -133,6 +133,7 @@ run_experiments({
     "MA-PPO-SSUI3CCARLA": {
         "run": "PPO",
         "env": env_name,
+        'local_dir': './data_here',
         #max_failures=100,
         #resume=True,
         #"restore": "/home/jerry/ray_results/MA-PPO-SSUI3CCARLA/PPO_HighwayCross3Car-v0_0_2021-03-05_00-24-21bt31p0tk/checkpoint_320/checkpoint-320",
