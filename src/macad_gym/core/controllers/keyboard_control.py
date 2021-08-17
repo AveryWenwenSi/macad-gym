@@ -45,8 +45,9 @@ class KeyboardControl(object):
         # world.hud.notification("Press 'H' or '?' for help.", seconds=4.0)
 
     def parse_events(self, world, clock):
-        self.vehicle = world.actor_list[self.actor_id]
+        self.vehicle = world._actors[self.actor_id]
         self.vehicle.set_autopilot(self._autopilot_enabled)
+        clock.tick(10)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return True
@@ -85,7 +86,7 @@ class KeyboardControl(object):
                 self._parse_keys1(pygame.key.get_pressed(), clock.get_time())
             elif self.actor_id == 1:
                 self._parse_keys2(pygame.key.get_pressed(), clock.get_time())
-            elif self.actor_id == -1:  # use default ones
+            else:  # use default ones
                 self._parse_keys(pygame.key.get_pressed(), clock.get_time())
             self.vehicle.apply_control(self._control)
 
@@ -99,6 +100,7 @@ class KeyboardControl(object):
         else:
             self._steer_cache = 0.0
         self._steer_cache = min(0.7, max(-0.7, self._steer_cache))
+        
         self._control.steer = round(self._steer_cache, 1)
         self._control.brake = 1.0 if keys[K_DOWN] or keys[K_s] else 0.0
         self._control.hand_brake = keys[K_SPACE]
