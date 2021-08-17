@@ -2,10 +2,16 @@
 import gym
 import macad_gym  # noqa F401
 
-env = gym.make("HomoNcomIndePOIntrxMASS3CTWN3-v0")
+try:
+    env = gym.make("HeteNcomIndePOIntrxMATLS1B2C1PTWN3-v0")
+except:
+    print("something wrong")
+    
+env = gym.make("HeteNcomIndePOIntrxMATLS1B2C1PTWN3-v0")
 configs = env.configs
 env_config = configs["env"]
 actor_configs = configs["actors"]
+print(configs)
 
 
 class SimpleAgent(object):
@@ -25,7 +31,7 @@ class SimpleAgent(object):
             if env_config["discrete_actions"]:
                 self.action_dict[actor_id] = 3  # Drive forward
             else:
-                self.action_dict[actor_id] = [1, 0]  # Full-throttle
+                self.action_dict[actor_id] = [-1, 0]  # Full-throttle
         return self.action_dict
 
 
@@ -36,6 +42,6 @@ for ep in range(2):
     step = 0
     while not done["__all__"]:
         obs, reward, done, info = env.step(agent.get_action(obs))
-        print(f"Step#:{step}  Rew:{reward}  Done:{done}")
+        # print(f"Step#:{step}  Rew:{reward}  Done:{done}")
         step += 1
 env.close()

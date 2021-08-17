@@ -18,6 +18,8 @@ def multi_view_render(images, unit_dimension, actor_configs):
     global i
     pygame.init()
     surface_seq = ()
+    del images['vehicle1']
+
     poses, window_dim = get_surface_poses(
         len(images), unit_dimension, images.keys())
 
