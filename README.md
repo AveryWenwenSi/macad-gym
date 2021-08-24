@@ -67,12 +67,19 @@ env = gym.make("HomoNcomIndePOIntrxMASS3CTWN3-v0")
         `git clone https://github.com/praveen-palanisamy/macad-gym.git && cd macad-gym`
      - Create a new conda env named "macad-gym" and install the required packages:
       `conda env create -f conda_env.yml`
+      `pip install -r requirement-multi.txt`
      - Activate the `macad-gym` conda python env:
       `source activate macad-gym`
      - Install the `macad-gym` package:
 	  `pip install -e .`
      - Install CARLA PythonAPI: `pip install carla==0.9.4`
      > NOTE: Change the carla client PyPI package version number to match with your CARLA server version
+     ```bash
+     pip install matplotlib
+     conda install mkl
+     sudo rm -rf /home/wenwens/miniconda3/envs/multi-macad/lib/python3.6/site-packages/numpy*
+     pip install numpy==1.19.5
+     ```
      
 
 ### Learning Platform and Agent Interface
