@@ -93,9 +93,21 @@ if __name__ == "__main__":
     obs_space = Box(0.0, 255.0, shape=(84, 84, 3))
     act_space = Discrete(9)
 
+    model_config = {
+        # Model and preprocessor options.
+        "model": {
+            "custom_preprocessor": "sq_im_84",
+            "dim": 84,
+            "free_log_std": False,  # if discrete_actions else True,
+            "grayscale": True,
+        },
+        # env_config to be passed to env_creator
+        "env_config": env_actor_configs
+    }
+
     policy_graphs = {
-        "ppo_policy": (PPOPolicyGraph, obs_space, act_space, {}),
-        "dqn_policy": (DQNPolicyGraph, obs_space, act_space, {}),
+        "ppo_policy": (PPOPolicyGraph, obs_space, act_space, model_config),
+        "dqn_policy": (DQNPolicyGraph, obs_space, act_space, model_config),
     }
 
     def policy_mapping_fn(agent_id):
