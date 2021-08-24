@@ -8,10 +8,10 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
     """A 4-way signalized intersection with 1 Bike, 2 Cars, 1 Pedestrian"""
     def __init__(self):
         self.configs = {
-            "scenarios": "DEFAULT_SCENARIO_TOWN1_COMBINED_WITH_MANUAL",
+            "scenarios": "DEFAULT_SCENARIO_TOWN1",
             "env": {
                 "server_map": "/Game/Carla/Maps/Town01",
-                "render": True,
+                "render": False,
                 "render_x_res": 800,
                 "render_y_res": 600,
                 "x_res": 400,
@@ -34,7 +34,7 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
                     "early_terminate_on_collision": True,
                     "reward_function": "corl2017",
                     "manual_control": False,
-                    "auto_control": True,
+                    "auto_control": False,
                     "camera_type": "rgb",
                     "collision_sensor": "on",
                     "lane_sensor": "on",
@@ -46,20 +46,20 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
                     "use_depth_camera": False,
                     "send_measurements": False,
                 },
-                "manual": {
+                "vehicle2": {
                     "type": "vehicle_4w",
                     "enable_planner": False,
                     "convert_images_to_video": False,
                     "early_terminate_on_collision": True,
                     "reward_function": "corl2017",
-                    "manual_control": True,
+                    "manual_control": False,
                     "auto_control": False,
                     "camera_type": "rgb",
                     "collision_sensor": "on",
                     "lane_sensor": "on",
                     "log_images": False,
                     "log_measurements": False,
-                    "render": True,
+                    "render": False,
                     "x_res": 400,
                     "y_res": 400,
                     "use_depth_camera": False,
