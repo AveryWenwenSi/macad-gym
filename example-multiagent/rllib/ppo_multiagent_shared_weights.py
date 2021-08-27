@@ -136,7 +136,7 @@ if __name__ == "__main__":
             "multiagent": {
                 "policy_graphs": policy_graphs,
                 "policy_mapping_fn": policy_mapping_fn,
-                "policies_to_train": ["ppo_policy"],
+                "policies_to_train": [], #["ppo_policy"],
             },
             # disable filters, otherwise we would need to synchronize those
             # as well to the DQN agent
@@ -149,6 +149,23 @@ if __name__ == "__main__":
     ppo_trainer.optimizer.foreach_evaluator(
         lambda ev: ev.for_policy(
             lambda pi: pi.set_epsilon(0.0), policy_id="dqn_policy"))
+
+    # Start our actual experiment.
+    victim_checkpoint = "~/Code/macad-gym/example-multiagent/PPO_HomoNcomIndePOIntrxMASS3CTWN3-v0/checkpoint_500"
+
+    stop = {
+        "episode_reward_mean": args.stop_reward,
+        "timesteps_total": args.stop_timesteps,
+        "training_iteration": args.stop_iters,
+    }
+
+    results = tune.run(
+        "PPO",
+        stop=stop,
+        config=config,
+        verbose=1,
+        restore=victim_checkpoint,
+    )
 
     for i in range(args.num_iters):
         print("== Iteration", i, "==")

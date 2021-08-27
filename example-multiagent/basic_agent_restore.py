@@ -110,6 +110,8 @@ policy_graphs = {
     for a_id in env_actor_configs["actors"].keys()
 }
 
+checkpoint = "~/Code/macad-gym/example-multiagent/PPO_HomoNcomIndePOIntrxMASS3CTWN3-v0/checkpoint_500"
+# do not train
 run_experiments({
     "MA-PPO-SSUI3CCARLA": {
         "run": "PPO",
@@ -124,13 +126,12 @@ run_experiments({
                 "policy_graphs": policy_graphs,
                 "policy_mapping_fn":
                 tune.function(lambda agent_id: agent_id),
+                "policies_to_train": [],
             },
             "num_workers": num_workers,
             "num_envs_per_worker": envs_per_worker,
             "sample_batch_size": sample_bs_per_worker,
-            "train_batch_size": train_bs
         },
-        "checkpoint_freq": 500,
-        "checkpoint_at_end": True,
+        "restore": checkpoint
     }
 })
