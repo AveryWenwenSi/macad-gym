@@ -1,6 +1,7 @@
 import argparse
 from gym.spaces import Box, Discrete
 import ray
+import gym
 from ray.rllib.agents.impala import impala
 from ray.rllib.models.preprocessors import Preprocessor
 from ray.rllib.models.catalog import ModelCatalog
@@ -30,7 +31,7 @@ parser.add_argument(
     type=int,
     help="Num workers (CPU cores) to use")
 parser.add_argument(
-    "--num-gpus", default=2, type=int, help="Number of gpus to use. Default=2")
+    "--num-gpus", default=1, type=int, help="Number of gpus to use. Default=2")
 parser.add_argument(
     "--sample-bs-per-worker",
     default=50,
@@ -85,26 +86,42 @@ else:
     register_mnih15_net()
     model_name = "mnih15"
 
-# Used only in debug mode
-env_name = "Carla-v0"
+# # Used only in debug mode
+# env_name = "Carla-v0"
 
-num_framestack = args.num_framestack
+# num_framestack = args.num_framestack
+
+
+# def env_creator(env_config):
+#     # NOTES: env_config.worker_index & vector_index are useful for
+#     # curriculum learning or joint training experiments
+#     configs = DEFAULT_MULTIENV_CONFIG
+#     configs["render"] = False
+#     env = MultiCarlaEnv(configs)
+#     # Apply wrappers to: convert to Grayscale, resize to 84 x 84,
+#     # stack frames & some more op
+#     env = wrap_deepmind(env, dim=84, num_framestack=num_framestack)
+#     return env
+
+
+# register_env("dm-" + env_name, env_creator)
+
+env_name = "HeteNcomIndePOIntrxMATLS1B2C1PTWN3-v0"
+env = gym.make(env_name)
+env_actor_configs = env.configs
+num_framestack = env_actor_configs["env"]["framestack"]
 
 
 def env_creator(env_config):
-    # NOTES: env_config.worker_index & vector_index are useful for
-    # curriculum learning or joint training experiments
-    configs = DEFAULT_MULTIENV_CONFIG
-    configs["render"] = False
-    env = MultiCarlaEnv(configs)
+    import macad_gym
+    env = gym.make("HeteNcomIndePOIntrxMATLS1B2C1PTWN3-v0")
     # Apply wrappers to: convert to Grayscale, resize to 84 x 84,
     # stack frames & some more op
     env = wrap_deepmind(env, dim=84, num_framestack=num_framestack)
     return env
 
 
-register_env("dm-" + env_name, env_creator)
-
+register_env(env_name, lambda config: env_creator(config))
 
 # Placeholder to enable use of a custom pre-processor
 class ImagePreproc(Preprocessor):
@@ -232,7 +249,7 @@ if not args.debug:
     from tqdm import tqdm
     from pprint import pprint
     trainer = impala.ImpalaAgent(
-        env="dm-" + env_name,
+        env=env_name,
         config={
             "multiagent": {
                 "policy_graphs": {
@@ -243,6 +260,7 @@ if not args.debug:
                                    })
                 },
                 "policy_mapping_fn": lambda agent_id: "def_policy",
+                "policies_to_train": [],
             },
         })
     for iter in tqdm(range(args.num_steps), desc="Iters"):
@@ -251,8 +269,9 @@ if not args.debug:
             trainer.save("saved_models/multi-carla/" + args.model_arch)
         pprint(results)
 else:
+    # tune from 500 checkpoints.
     config.update({
-        "env": "dm-" + env_name,
+        "env":env_name,
         "log_level": "DEBUG",
         "multiagent": {
             "policy_graphs": {

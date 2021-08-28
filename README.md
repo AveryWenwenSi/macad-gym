@@ -3,8 +3,8 @@
  Driving (MACAD) built on top of the CARLA Autonomous Driving simulator.
 
 ```
-export PATH="$PATH:/usr/local/cuda-8.0/bin"
-export LD_LIBRARY_PATH="/usr/local/cuda-8.0/lib64"
+export PATH="$PATH:/usr/local/cuda-10.0/bin"
+export LD_LIBRARY_PATH="/usr/local/cuda-10.0/lib64"
 export CUDA_HOME=/CUDA/installation/path
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64"
 ```
