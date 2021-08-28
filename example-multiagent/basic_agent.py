@@ -51,14 +51,14 @@ num_iters = 20         #
 num_workers = 1        #Num workers (CPU cores) to use
 num_gpus = 1           #
 sample_bs_per_worker = 50   # Number of samples in a batch per worker. Default=50
-train_bs = 500              # Train batch size. Use as per available GPU mem. Default=500
+train_bs = 128              # Train batch size. Use as per available GPU mem. Default=500
 envs_per_worker = 1         # Number of env instances per worker. Default=10
 notes = None                # Custom experiment description to be added to comet logs
 
 register_mnih15_shared_weights_net()        #??
 model_name = "mnih15_shared_weights"
 
-env_name = "HomoNcomIndePOIntrxMASS3CTWN3-v0"
+env_name = "HeteNcomIndePOIntrxMATLS1B2C1PTWN3-v0"
 env = gym.make(env_name)
 env_actor_configs = env.configs
 num_framestack = env_actor_configs["env"]["framestack"]
@@ -66,7 +66,7 @@ num_framestack = env_actor_configs["env"]["framestack"]
 
 def env_creator(env_config):
     import macad_gym
-    env = gym.make("HomoNcomIndePOIntrxMASS3CTWN3-v0")
+    env = gym.make("HeteNcomIndePOIntrxMATLS1B2C1PTWN3-v0")
     # Apply wrappers to: convert to Grayscale, resize to 84 x 84,
     # stack frames & some more op
     env = wrap_deepmind(env, dim=84, num_framestack=num_framestack)
@@ -130,7 +130,7 @@ run_experiments({
             "sample_batch_size": sample_bs_per_worker,
             "train_batch_size": train_bs
         },
-        "checkpoint_freq": 500,
+        "checkpoint_freq": 5,
         "checkpoint_at_end": True,
     }
 })

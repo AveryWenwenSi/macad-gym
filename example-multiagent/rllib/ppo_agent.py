@@ -7,8 +7,8 @@ from ray.rllib.models.catalog import ModelCatalog
 import ray.tune as tune
 from ray.tune import register_env
 from macad_gym.carla.multi_env import MultiCarlaEnv, DEFAULT_MULTIENV_CONFIG
-from macad_agents.rllib.models import register_mnih15_net
-from macad_agents.rllib.env_wrappers import wrap_deepmind
+from models import register_mnih15_net
+from env_wrappers import wrap_deepmind
 from ray.rllib.agents.ppo.ppo_policy_graph import PPOPolicyGraph
 
 parser = argparse.ArgumentParser()
@@ -228,7 +228,7 @@ else:
     ray.init(num_gpus=args.num_gpus)
 
 # Create a debugging friendly instance
-if args.debug:
+if not args.debug:
     from tqdm import tqdm
     from pprint import pprint
     trainer = impala.ImpalaAgent(
@@ -263,9 +263,10 @@ else:
                                })
             },
             "policy_mapping_fn": tune.function(lambda agent_id: "def_policy"),
+            "policies_to_train": [],
         }
     })
-
+    checkpoint = "~/Code/macad-gym/example-multiagent/PPO_HomoNcomIndePOIntrxMASS3CTWN3-v0/checkpoint_500"
     experiment_spec = tune.Experiment(
         "multi-carla/" + args.model_arch,
         "PPO",
@@ -273,10 +274,11 @@ else:
         # stop={"timesteps_total": args.num_steps},
         stop={"timesteps_since_restore": args.num_steps},
         config=config,
-        checkpoint_freq=1000,
-        checkpoint_at_end=True,
+        # checkpoint_freq=1000,
+        # checkpoint_at_end=True,
+        restore=checkpoint,
         resources_per_trial={
-            "cpu": 4,
+            "cpu": 3,
             "gpu": 1
         })
     tune.run_experiments(experiment_spec)

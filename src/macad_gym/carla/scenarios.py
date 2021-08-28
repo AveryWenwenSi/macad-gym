@@ -227,7 +227,7 @@ SUI1B2C1P_TOWN3 = {
 # Simple scenario for Town01 that involves driving down a road
 DEFAULT_SCENARIO_TOWN1 = build_ma_scenario(
     map="Town01",
-    actors={"vehicle1": {
+    actors={"car1": {
         "start": [
                     217.50997924804688, 198.75999450683594, 0.50,
                     -0.16
@@ -237,7 +237,7 @@ DEFAULT_SCENARIO_TOWN1 = build_ma_scenario(
             -0.16
         ]
     },
-    "vehicle2": {
+    "car2": {
         "start": [
             299.39996337890625, 194.75999450683594, 0.50,
             180

@@ -51,14 +51,14 @@ num_iters = 20         #
 num_workers = 1        #Num workers (CPU cores) to use
 num_gpus = 1           #
 sample_bs_per_worker = 50   # Number of samples in a batch per worker. Default=50
-train_bs = 500              # Train batch size. Use as per available GPU mem. Default=500
+train_bs = 128              # Train batch size. Use as per available GPU mem. Default=500
 envs_per_worker = 1         # Number of env instances per worker. Default=10
 notes = None                # Custom experiment description to be added to comet logs
 
 register_mnih15_shared_weights_net()        #??
 model_name = "mnih15_shared_weights"
 
-env_name = "HomoNcomIndePOIntrxMASS3CTWN3-v0"
+env_name = "HeteNcomIndePOIntrxMATLS1B2C1PTWN3-v0"
 env = gym.make(env_name)
 env_actor_configs = env.configs
 num_framestack = env_actor_configs["env"]["framestack"]
@@ -66,7 +66,7 @@ num_framestack = env_actor_configs["env"]["framestack"]
 
 def env_creator(env_config):
     import macad_gym
-    env = gym.make("HomoNcomIndePOIntrxMASS3CTWN3-v0")
+    env = gym.make("HeteNcomIndePOIntrxMATLS1B2C1PTWN3-v0")
     # Apply wrappers to: convert to Grayscale, resize to 84 x 84,
     # stack frames & some more op
     env = wrap_deepmind(env, dim=84, num_framestack=num_framestack)
@@ -87,20 +87,11 @@ def gen_policy():
                     "notes": notes
                 },
             },
-            # NOTE:Wrappers are applied by RLlib if custom_preproc is NOT
-            # specified
             "custom_preprocessor": "sq_im_84",
             "dim": 84,
             "free_log_std": False,  # if discrete_actions else True,
             "grayscale": True,
-            # conv_filters to be used with the custom CNN model.
-            # "conv_filters": [[16, [4, 4], 2], [32, [3, 3], 2],
-            # [16, [3, 3], 2]]
         },
-        # preproc_pref is ignored if custom_preproc is specified
-        # "preprocessor_pref": "deepmind",
-
-        # env_config to be passed to env_creator
         "env_config": env_actor_configs
     }
     return (PPOPolicyGraph, obs_space, act_space, config)
@@ -110,7 +101,7 @@ policy_graphs = {
     for a_id in env_actor_configs["actors"].keys()
 }
 
-checkpoint = "~/Code/macad-gym/example-multiagent/PPO_HomoNcomIndePOIntrxMASS3CTWN3-v0/checkpoint_500"
+checkpoint = "/home/wenwens/macad-gym/example-multiagent/PPO_HomoNcomIndePOIntrxMASS3CTWN3-v0/checkpoint_500/checkpoint-500"
 # do not train
 run_experiments({
     "MA-PPO-SSUI3CCARLA": {
@@ -120,7 +111,7 @@ run_experiments({
             "training_iteration": num_iters
         },
         "config": {
-            "log_level": "DEBUG",
+            # "log_level": "DEBUG",
             "num_sgd_iter": 10,
             "multiagent": {
                 "policy_graphs": policy_graphs,
@@ -132,6 +123,6 @@ run_experiments({
             "num_envs_per_worker": envs_per_worker,
             "sample_batch_size": sample_bs_per_worker,
         },
-        "restore": checkpoint
+        "restore": checkpoint,
     }
 })

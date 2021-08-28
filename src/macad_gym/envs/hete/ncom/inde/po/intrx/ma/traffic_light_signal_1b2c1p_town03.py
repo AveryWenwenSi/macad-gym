@@ -14,8 +14,8 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
                 "render": False,
                 "render_x_res": 800,
                 "render_y_res": 600,
-                "x_res": 400,
-                "y_res": 400,
+                "x_res": 84,
+                "y_res": 84,
                 "framestack": 1,
                 "discrete_actions": False,
                 "squash_action_logits": False,
@@ -27,7 +27,7 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
                 "fixed_delta_seconds": 0.05,
             },
             "actors": {
-                "vehicle1": {
+                "car1": {
                     "type": "vehicle_4W",
                     "enable_planner": False,
                     "convert_images_to_video": False,
@@ -41,12 +41,12 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
                     "log_images": False,
                     "log_measurements": False,
                     "render": False,
-                    "x_res": 400,
-                    "y_res": 400,
+                    "x_res": 84,
+                    "y_res": 84,
                     "use_depth_camera": False,
                     "send_measurements": False,
                 },
-                "vehicle2": {
+                "car2": {
                     "type": "vehicle_4w",
                     "enable_planner": False,
                     "convert_images_to_video": False,
@@ -60,8 +60,8 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
                     "log_images": False,
                     "log_measurements": False,
                     "render": False,
-                    "x_res": 400,
-                    "y_res": 400,
+                    "x_res": 84,
+                    "y_res": 84,
                     "use_depth_camera": False,
                     "send_measurements": False,
                 },

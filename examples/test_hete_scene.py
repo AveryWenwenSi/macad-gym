@@ -1,11 +1,6 @@
 #!/bin/env python
 import gym
 import macad_gym  # noqa F401
-
-try:
-    env = gym.make("HeteNcomIndePOIntrxMATLS1B2C1PTWN3-v0")
-except:
-    print("something wrong")
     
 env = gym.make("HeteNcomIndePOIntrxMATLS1B2C1PTWN3-v0")
 configs = env.configs
@@ -42,6 +37,6 @@ for ep in range(2):
     step = 0
     while not done["__all__"]:
         obs, reward, done, info = env.step(agent.get_action(obs))
-        # print(f"Step#:{step}  Rew:{reward}  Done:{done}")
+        print(f"Step#:{step}  Rew:{reward}  Done:{done}")
         step += 1
 env.close()
