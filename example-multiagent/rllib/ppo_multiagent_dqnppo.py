@@ -107,7 +107,7 @@ if __name__ == "__main__":
 
     policy_graphs = {
         "ppo_policy": (PPOPolicyGraph, obs_space, act_space, model_config),
-        "dqn_policy": (DQNPolicyGraph, obs_space, act_space, model_config),
+        # "dqn_policy": (DQNPolicyGraph, obs_space, act_space, model_config),
     }
 
     def policy_mapping_fn(agent_id):

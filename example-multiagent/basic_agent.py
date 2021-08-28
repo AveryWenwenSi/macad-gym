@@ -124,6 +124,7 @@ run_experiments({
                 "policy_graphs": policy_graphs,
                 "policy_mapping_fn":
                 tune.function(lambda agent_id: agent_id),
+                "policies_to_train": ["vehicle1"]
             },
             "num_workers": num_workers,
             "num_envs_per_worker": envs_per_worker,

@@ -42,6 +42,6 @@ for ep in range(2):
     step = 0
     while not done["__all__"]:
         obs, reward, done, info = env.step(agent.get_action(obs))
-        # print(f"Step#:{step}  Rew:{reward}  Done:{done}")
+        print(f"Step#:{step}  Rew:{reward}  Done:{done} Info{info}" )
         step += 1
 env.close()
