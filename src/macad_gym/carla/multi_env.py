@@ -1188,6 +1188,7 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
         config = self._actor_configs[actor_id]
         flag = config["reward_function"]
         cmpt_reward = Reward()
+        # should be compute with the other id
         reward = cmpt_reward.compute_reward(self._prev_measurement[actor_id],
                                             py_measurements, flag)
 

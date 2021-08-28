@@ -19,6 +19,15 @@ class Reward(object):
             return self.compute_reward_custom()
         elif flag == "hiway_lane_change":
             return self.compute_reward_hiway_lane_change()
+        else:
+            return self.compute_others_offroad()
+
+    def compute_others_offroad(self):
+        # currently my self
+        self.reward = 0.0
+        self.reward += self.curr["intersection_offroad"] 
+        self.reward += self.curr["intersection_otherlane"] 
+        return self.reward
 
     def compute_reward_custom(self):
         self.reward = 0.0
