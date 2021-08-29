@@ -17,7 +17,7 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
                 "x_res": 400,
                 "y_res": 400,
                 "framestack": 1,
-                "discrete_actions": False,
+                "discrete_actions": True,
                 "squash_action_logits": False,
                 "verbose": False,
                 "use_depth_camera": False,
