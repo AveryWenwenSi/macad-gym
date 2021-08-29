@@ -33,7 +33,7 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
                     "convert_images_to_video": False,
                     "early_terminate_on_collision": True,
                     "reward_function": "corl2017",
-                    "manual_control": True,
+                    "manual_control": False,
                     "auto_control": False,
                     "camera_type": "rgb",
                     "collision_sensor": "on",
