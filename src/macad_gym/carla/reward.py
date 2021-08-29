@@ -8,7 +8,8 @@ class Reward(object):
         self.curr = None
 
     def compute_reward(self, prev_measurement, curr_measurement, flag):
-        self.prev = prev_measurement
+        self.prev = prev_measurement["vehicle1"]
+        self.prev2 = prev_measurement["vehicle2"]
         self.curr = curr_measurement
 
         if flag == "corl2017":
@@ -19,36 +20,44 @@ class Reward(object):
             return self.compute_reward_custom()
         elif flag == "hiway_lane_change":
             return self.compute_reward_hiway_lane_change()
-        else:
+        elif flag == "flag_v1":
+            return self.compute_my_attack()
+        elif flag == "flag_v2":
             return self.compute_others_offroad()
 
-    def compute_others_offroad(self):
-        # currently my self
-        self.reward = 0.0
-        self.reward += self.curr["intersection_offroad"] 
-        self.reward += self.curr["intersection_otherlane"] 
-        return self.reward
-
-    def compute_reward_custom(self):
-        self.reward = 0.0
-        cur_dist = self.curr["distance_to_goal"]
-        prev_dist = self.prev["distance_to_goal"]
-        self.reward += np.clip(prev_dist - cur_dist, -10.0, 10.0)
-        self.reward += np.clip(self.curr["forward_speed"], 0.0, 30.0) / 10
-        new_damage = (
+    def compute_my_attack(self):
+        self.reward = self.prev2["previous_reward"] if self.prev2["previous_reward"] else 0
+        # cur_dist = self.curr["distance_to_goal"]
+        # prev_dist = self.prev["distance_to_goal"]
+        # # Distance travelled toward the goal in m
+        # self.reward += np.clip(prev_dist - cur_dist, -10.0, 10.0)
+        # Change in speed (km/h)
+        self.reward += 0.05 * (
+            self.curr["forward_speed"] - self.prev["forward_speed"])
+        # New collision damage
+        self.reward -= .00002 * (
             self.curr["collision_vehicles"] +
             self.curr["collision_pedestrians"] + self.curr["collision_other"] -
             self.prev["collision_vehicles"] -
             self.prev["collision_pedestrians"] - self.prev["collision_other"])
-        if new_damage:
-            self.reward -= 100.0
 
-        self.reward -= self.curr["intersection_offroad"] * 0.05
-        self.reward -= self.curr["intersection_otherlane"] * 0.05
+        # New sidewalk intersection
+        self.reward -= 2 * self.curr["intersection_offroad"] 
+        print("intersection_offroad", self.curr["intersection_offroad"] )
+        print("intersection_offroad", self.curr["intersection_otherlane"] )
 
-        if self.curr["next_command"] == "REACH_GOAL":
-            self.reward += 100
+        # self.reward -= 2 * (self.curr["intersection_offroad"] -
+        #                     self.prev["intersection_offroad"])
 
+
+        return self.reward
+
+    def compute_others_offroad(self):
+        # may try curr prev offset if not working
+        # though no common constaint but v2 is not trained
+        self.reward = 0.0
+        self.reward += self.curr["intersection_offroad"] 
+        self.reward += self.curr["intersection_otherlane"] 
         return self.reward
 
     def compute_reward_corl2017(self):
@@ -74,6 +83,28 @@ class Reward(object):
         # New opposite lane intersection
         self.reward -= 2 * (self.curr["intersection_otherlane"] -
                             self.prev["intersection_otherlane"])
+
+        return self.reward
+
+    def compute_reward_custom(self):
+        self.reward = 0.0
+        cur_dist = self.curr["distance_to_goal"]
+        prev_dist = self.prev["distance_to_goal"]
+        self.reward += np.clip(prev_dist - cur_dist, -10.0, 10.0)
+        self.reward += np.clip(self.curr["forward_speed"], 0.0, 30.0) / 10
+        new_damage = (
+            self.curr["collision_vehicles"] +
+            self.curr["collision_pedestrians"] + self.curr["collision_other"] -
+            self.prev["collision_vehicles"] -
+            self.prev["collision_pedestrians"] - self.prev["collision_other"])
+        if new_damage:
+            self.reward -= 100.0
+
+        self.reward -= self.curr["intersection_offroad"] * 0.05
+        self.reward -= self.curr["intersection_otherlane"] * 0.05
+
+        if self.curr["next_command"] == "REACH_GOAL":
+            self.reward += 100
 
         return self.reward
 

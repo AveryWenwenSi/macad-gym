@@ -125,7 +125,6 @@ if __name__ == "__main__":
             # disable filters, otherwise we would need to synchronize those
             # as well to the DQN agent
             "gamma": 0.95,
-            "n_step": 3,
         })
 
     for i in range(args.num_iters):

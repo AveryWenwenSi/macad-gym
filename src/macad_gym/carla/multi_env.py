@@ -1189,7 +1189,7 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
         flag = config["reward_function"]
         cmpt_reward = Reward()
         # should be compute with the other id
-        reward = cmpt_reward.compute_reward(self._prev_measurement[actor_id],
+        reward = cmpt_reward.compute_reward(self._prev_measurement,
                                             py_measurements, flag)
 
         self._previous_rewards[actor_id] = reward
@@ -1285,12 +1285,12 @@ class MultiCarlaEnv(*MultiAgentEnvBases):
         # check if lane detection is turned on or off!! (enable cars to change lanes on highway scenario)
         
         change_lane_enabled = cur_config["lane_sensor"]
-        if change_lane_enabled:
-            intersection_otherlane =  0     # self._lane_invasions[actor_id].offlane
-            intersection_offroad =    0     # self._lane_invasions[actor_id].offroad
-        else:
-            intersection_otherlane =  self._lane_invasions[actor_id].offlane
-            intersection_offroad =    self._lane_invasions[actor_id].offroad
+        # if change_lane_enabled:
+        #     intersection_otherlane =  0     # self._lane_invasions[actor_id].offlane
+        #     intersection_offroad =    0     # self._lane_invasions[actor_id].offroad
+        # else:
+        intersection_otherlane =  self._lane_invasions[actor_id].offlane
+        intersection_offroad =    self._lane_invasions[actor_id].offroad
 
 
         if next_command == "REACH_GOAL":

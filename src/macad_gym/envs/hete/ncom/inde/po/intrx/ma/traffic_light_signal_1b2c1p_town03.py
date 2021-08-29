@@ -28,12 +28,13 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
             },
             "actors": {
                 "vehicle1": {
+                    # to be trained
                     "type": "vehicle_4W",
                     "enable_planner": False,
                     "convert_images_to_video": False,
                     "early_terminate_on_collision": True,
-                    "reward_function": "corl2017",
-                    "manual_control": False,
+                    "reward_function": "flag_v1",
+                    "manual_control": True,
                     "auto_control": False,
                     "camera_type": "rgb",
                     "collision_sensor": "on",
@@ -47,11 +48,12 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
                     "send_measurements": False,
                 },
                 "vehicle2": {
+                    # autopilot
                     "type": "vehicle_4w",
                     "enable_planner": False,
                     "convert_images_to_video": False,
                     "early_terminate_on_collision": True,
-                    "reward_function": "corl2017",
+                    "reward_function": "flag_v2",
                     "manual_control": False,
                     "auto_control": True,
                     "camera_type": "rgb",
