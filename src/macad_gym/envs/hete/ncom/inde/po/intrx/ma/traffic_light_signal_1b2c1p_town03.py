@@ -11,7 +11,7 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
             "scenarios": "DEFAULT_SCENARIO_TOWN1",
             "env": {
                 "server_map": "/Game/Carla/Maps/Town01",
-                "render": True,
+                "render": False,
                 "render_x_res": 800,
                 "render_y_res": 600,
                 "x_res": 400,
@@ -41,7 +41,7 @@ class TrafficLightSignal1B2C1PTown03(MultiCarlaEnv):
                     "lane_sensor": "on",
                     "log_images": False,
                     "log_measurements": False,
-                    "render": True,
+                    "render": False,
                     "x_res": 84,
                     "y_res": 84,
                     "use_depth_camera": False,

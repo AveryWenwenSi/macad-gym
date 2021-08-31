@@ -28,7 +28,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--num-iters", type=int, default=20)
 parser.add_argument(
     "--num-workers",
-    default=2,
+    default=1,
     type=int,
     help="Num workers (CPU cores) to use")
 parser.add_argument(
@@ -40,7 +40,7 @@ parser.add_argument(
     help="Number of samples in a batch per worker. Default=50")
 parser.add_argument(
     "--train-bs",
-    default=128,
+    default=2,
     type=int,
     help="Train batch size. Use as per available GPU mem. Default=500")
 parser.add_argument(
@@ -111,8 +111,12 @@ if __name__ == "__main__":
     }
 
     def policy_mapping_fn(agent_id):
+        print("==================================agent id=", agent_id)
         if agent_id == "vehicle1":
+            print("==================================agent id=", agent_id)
             return "ppo_policy"
+        else:
+            return "autopilot"
 
     ppo_trainer = PPOAgent(
         env=env_name,
